@@ -1,0 +1,112 @@
+{ grafo della macchina prodotto e2 x e21 (guasta) }
+
+define main(bottom,top)
+
+	{ palloni ed etichette }
+see=tits([0,0]) ;		{ stato ee }
+label(see.o1,"e");
+label(see.o2,"e");
+sff=tits([0,-4]) ;	{ stato ff }
+label(sff.o1,"f");
+label(sff.o2,"f");
+sgg=tits([0,-8]) ;	{ stato gg }
+label(sgg.o1,"g");
+label(sgg.o2,"g");
+sfg=tits([0,-12]) ;	{ stato fg }
+label(sfg.o1,"f");
+label(sfg.o2,"g");
+sfe=tits([0,-16]) ;	{ stato fe }
+label(sfe.o1,"f");
+label(sfe.o2,"e");
+sgf=tits([0,-20]) ;	{ stato gf }
+label(sgf.o1,"g");
+label(sgf.o2,"f");
+sef=tits([0,-24]) ;	{ stato ef }
+label(sef.o1,"e");
+label(sef.o2,"f");
+
+        { ee -> ff 0 }
+ee_ff0=arc8(B=sff.o1+versor(90+22.5),A=see.o1+versor(270-22.5)) ;
+arrow(ee_ff0.B,rotate=-90+22.5) ;
+label(ee_ff0.C+_i/2,"AA") ;
+
+        { ee -> ff 1 }
+ee_ff=arc8(A=sff.o2+versor(90-22.5),B=see.o2+versor(270+22.5),dash=4) ;
+arrow(ee_ff.A,rotate=180+90-22.5,dash=4) ;
+label(ee_ff.C-_i/2,"BB") ;
+
+        { gg -> ee  sinistra su lunga 2 }
+gg_ee=arc4(B=sgg.o1+versor(90+45),A=see.o1+versor(270-45)) ;
+arrow(gg_ee.A,rotate=90-45) ;
+label(gg_ee.C-_i/2,"CC") ;
+
+	{ ff -> ff }
+ff_ff=arc3_4(B=sff.o2+versor(40),A=sff.o2+versor(-40));
+arrow(ff_ff.B,rotate=180+40) ;
+label(ff_ff.C-_i/2,"CC") ;
+
+	{ ff -> gg  diritta  giu' }
+ff_gg=line(sff.o1+versor(-45),sgg.o1+versor(45),dash=4);
+arrow(ff_gg.B,rotate=-90,dash=4) ;
+label(ff_gg.M+_i/2,"BB") ;
+
+        { gg -> fg }
+gg_fg=arc8(A=sfg.o2+versor(90-22.5),B=sgg.o2+versor(270+22.5),dash=4) ;
+arrow(gg_fg.A,rotate=180+90-22.5,dash=4) ;
+label(gg_fg.C-_i/2,"CC") ;
+
+        { fg -> gg  sinistra su }
+fg_gg=arc8(B=sfg.o1+versor(90+22.5),A=sgg.o1+versor(270-22.5),dash=4) ;
+arrow(fg_gg.A,rotate=90-22.5,dash=4) ;
+label(fg_gg.C-_i/2,"BC") ;
+
+	{ fg -> fe  diritta  giu' }
+fg_fe=line(sfg.o1+versor(-45),sfe.o1+versor(45));
+arrow(fg_fe.B,rotate=-90) ;
+label(fg_fe.M+_i/2,"CC") ;
+
+	{ fe -> gf  diritta  giu' }
+fe_gf=line(sfe.o1+versor(-45),sgf.o1+versor(45),dash=4);
+arrow(fe_gf.B,rotate=-90,dash=4) ;
+label(fe_gf.M+_i/2,"BB") ;
+
+	{ gf -> ef  diritta  giu' }
+gf_ef=line(sgf.o1+versor(-45),sef.o1+versor(45));
+arrow(gf_ef.B,rotate=-90) ;
+label(gf_ef.M+_i/2,"CC") ;
+
+	{ fe -> ff }
+fe_ff=arc8(A=sfe.o2+versor(90-30),B=sff.o2+versor(-90+30)) ;
+arrow(fe_ff.B,rotate=90+20) ;
+label(fe_ff.C+_i/2,"CA") ;
+
+        { gf -> fg  sinistra su lunga 2 }
+gf_fg=arc4(B=sgf.o1+versor(90+45),A=sfg.o1+versor(270-45),dash=4) ;
+arrow(gf_fg.A,rotate=90-45,dash=4) ;
+label(gf_fg.C-_i/2,"CB") ;
+
+        { ef -> ff  sinistra su lunga 5 }
+ef_ff=arc4(B=sef.o1+versor(90+45),A=sff.o1+versor(270-45)) ;
+arrow(ef_ff.A,rotate=90-45) ;
+label(ef_ff.C+_i/2,"AC") ;
+
+        { ef -> fg  destra su lunga 4 }
+ef_fg=arc4(A=sef.o2+versor(40),B=sfg.o2+versor(-40),dash=4) ;
+arrow(ef_fg.B,rotate=90+42,dash=4) ;
+label(ef_fg.C-_i/2,"BB") ;
+
+        { dg -> de  destra su lunga 3 }
+{
+dg_de=arc8(A=sdg.o2+versor(90-22.5),B=sde.o2+versor(-90+22.5)) ;
+arrow(dg_de.B,rotate=180-90+22.5) ;
+label(dg_de.C+_i/2,"CC") ;
+}
+
+top=[ef_fg.C*_i+.5,see.o1*_j+1.5] ; 
+bottom=[ef_ff.C*_i-.5, sef.o2*_j-1.5] ;
+
+box(bottom,top,rotate=0);
+
+end main
+
+

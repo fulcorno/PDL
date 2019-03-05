@@ -1,0 +1,100 @@
+{ grafo del DFA associato alla macchina prodotto e2 x e21 (guasta) }
+define main(bottom,top)
+
+	{ palloni ed etichette }
+see=tits([0,0]) ;	{ stato ee }
+label(see.o1,"e");
+label(see.o2,"e");
+sff=tits([0,-4]) ;	{ stato ff }
+label(sff.o1,"f");
+label(sff.o2,"f");
+sgg=tits([0,-8]) ;	{ stato gg }
+label(sgg.o1,"g");
+label(sgg.o2,"g");
+sfg=tits([0,-12]) ;	{ stato fg }
+label(sfg.o1,"f");
+label(sfg.o2,"g");
+sfe=tits([0,-16]) ;	{ stato fe }
+label(sfe.o1,"f");
+label(sfe.o2,"e");
+sgf=tits([0,-20]) ;	{ stato gf }
+label(sgf.o1,"g");
+label(sgf.o2,"f");
+sef=tits([0,-24]) ;	{ stato ef }
+label(sef.o1,"e");
+label(sef.o2,"f");
+F=circle([5,-16],"F") ; { stato failure }
+circle(F,scale=0.9,"F") ;       { stato failure }
+
+        { ee -> ff 0 }
+ee_ff0=arc8(B=sff.o1+versor(90+22.5),A=see.o1+versor(270-22.5)) ;
+arrow(ee_ff0.B,rotate=-90+22.5) ;
+
+        { ee -> ff 1 }
+ee_ff=arc8(A=sff.o2+versor(90-22.5),B=see.o2+versor(270+22.5),dash=4) ;
+arrow(ee_ff.A,rotate=180+90-22.5,dash=4) ;
+
+        { gg -> ee  sinistra su lunga 2 }
+gg_ee=arc4(B=sgg.o1+versor(90+45),A=see.o1+versor(270-45)) ;
+arrow(gg_ee.A,rotate=90-45) ;
+
+	{ ff -> ff }
+ff_ff=arc3_4(B=sff.o2+versor(40),A=sff.o2+versor(-40));
+arrow(ff_ff.B,rotate=180+40) ;
+
+	{ ff -> gg  diritta  giu' }
+ff_gg=line(sff.o1+versor(-45),sgg.o1+versor(45),dash=4);
+arrow(ff_gg.B,rotate=-90,dash=4) ;
+
+	{ gg -> fg  diritta  giu' }
+gg_fg=line(sgg.o1+versor(-45),sfg.o1+versor(45),dash=4);
+arrow(gg_fg.B,rotate=-90,dash=4) ;
+
+        { gg -> fg }
+{gg_fg=arc8(A=sfg.o2+versor(90-22.5),B=sgg.o2+versor(270+22.5),dash=4) ;
+arrow(gg_fg.A,rotate=180+90-22.5,dash=4) ;}
+
+        { fg -> F  }
+scalar gamma;
+gamma=angle(F-sgf.o2);
+fg_F=line(sfg.o2+versor(-gamma),F+versor(180-gamma),dash=4);
+arrow(fg_F,rotate=-gamma,dash=4) ;
+	 
+	{ fg -> fe  diritta  giu' }
+fg_fe=line(sfg.o1+versor(-45),sfe.o1+versor(45));
+arrow(fg_fe.B,rotate=-90) ;
+
+	{ fe -> gf  diritta  giu' }
+fe_gf=line(sfe.o1+versor(-45),sgf.o1+versor(45),dash=4);
+arrow(fe_gf.B,rotate=-90,dash=4) ;
+
+	{ gf -> ef  diritta  giu' }
+gf_ef=line(sgf.o1+versor(-45),sef.o1+versor(45));
+arrow(gf_ef.B,rotate=-90) ;
+
+        { fe -> F }
+fe_F=line(sfe.o2+versor(0),F.B);
+arrow(fe_F) ;
+
+        { gf -> F }
+gf_F=line(sgf.o2+versor(gamma),F+versor(180+gamma),dash=4);
+arrow(gf_F,rotate=gamma,dash=4) ;
+
+        { ef -> F }
+scalar beta;
+beta=angle(F-sef.o2);
+ef_F=line(sef.o2+versor(beta),F+versor(180+beta));
+arrow(ef_F,rotate=beta) ;
+
+        { ef -> fg  sinistra su lunga 4 }
+ef_fg=arc4(B=sef.o1+versor(90+30),A=sfg.o1+versor(270-30),dash=4) ;
+arrow(ef_fg.A,rotate=90-40,dash=4) ;
+
+top=[F.A*_i+.5,see.o1*_j+1.5] ; 
+bottom=[ef_fg.C*_i-.5, sef.o2*_j-1.5] ;
+
+box(bottom,top,rotate=0);
+
+end main
+
+

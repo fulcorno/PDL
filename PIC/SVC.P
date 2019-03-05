@@ -1,0 +1,43 @@
+define main(bottom,top)
+	spec=circle([0,0],"SPECIFICA") ;
+	des1=circle([0,-4],"CIRCUITO 1") ;
+	des2=circle([4,-4],"CIRCUITO 2") ;
+	chip=circle([0,-8],"LAYOUT") ;
+	
+	l1=line(spec-_j,des1+_j) ;
+	arrow(l1,rotate=-90) ;
+	label(l1.M-_i/6,"S") ;
+	l2=line(des1-_j,chip+_j) ;
+	arrow(l2,rotate=-90) ;
+	label(l2.M-_i/6,"S") ;
+	l3=line(des1+_i,des2-_i) ;
+	arrow(l3,rotate=0) ;
+	label(l3.M+_j/6,"R") ;
+	l4=line(spec+versor(-45),des2+versor(135)) ;
+	arrow(l4,rotate=-45) ;
+	label(l4.M+(_i+_j)/6,"S") ;
+
+	a1=arc8(B=des1+versor(90+22.5),A=spec+versor(270-22.5)) ;
+	arrow(a1.A,rotate=90-22.5) ;
+	label(a1.C-_i/6,"E") ;
+	a2=arc4(B=chip+versor(90+45),A=spec+versor(270-45)) ;
+	arrow(a2.A,rotate=90-45) ;
+	label(a2.C+_i/6,"E") ;
+	
+	e1=arc8(A=des1+versor(90-22.5),B=spec+versor(270+22.5),dash=4) ;
+	arrow(e1.A,rotate=180+90-22.5,dash=4) ;
+	arrow(e1.B,rotate=180+270+22.5,dash=4) ;
+	label(e1.C+_i/6,"V") ;
+	
+	e2=arc8(A=chip+versor(90-22.5),B=des1+versor(270+22.5),dash=4) ;
+	arrow(e2.A,rotate=180+90-22.5,dash=4) ;
+	arrow(e2.B,rotate=180+270+22.5,dash=4) ;
+	label(e2.C+_i/6,"C") ;
+	
+	e3=arc8(A=des1+versor(-22.5),B=des2+versor(180+22.5),dash=4) ;
+	arrow(e3.A,rotate=180-22.5,dash=4) ;
+	arrow(e3.B,rotate=22.5,dash=4) ;
+	label(e3.C-_j/4,"V") ;
+	
+	top=[5.5,1.5] ; bottom=[-2.7,-9.5] ;
+end main

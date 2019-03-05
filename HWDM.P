@@ -1,0 +1,85 @@
+define circ(bottom,top,inp,out,FF,cn,ck,ppo,ppi)
+	b1=box(O=[0,0],scale=3) ;
+	cn=b1.O ;
+	
+	b2=box(up=b1.dn-_j,A to B=[1,3], rotate=0) ;
+	FF=b2.O ;
+	
+	xinp=line(B=(b1.C+b1.sx)/2,scale=3,dash=4) ; arrow(xinp,dash=4) ;
+	xout=line(A=(b1.B+b1.dx)/2,scale=2,dash=4) ; {arrow(xout,dash=4) ;}
+	inp=xinp.A ; out=xout.B ;
+	
+	ppor=line(A=(b1.dx+b1.D)/2,dash=4) ;
+	ppod=line(ppor,[ppor*_i,b2.dx*_j],dash=4) ;
+	ppo=ppod ;
+	ppol=line(ppod,b2.dx,dash=4) ; arrow(ppol,rotate=180,dash=4) ;
+	
+	ppir=line(A=(b1.sx+b1.A)/2,rotate=180,dash=4) ;
+	ppid=line(ppir,[ppir*_i,b2.sx*_j],dash=4) ;
+	ppi=ppid ;
+	ppil=line(ppid,b2.sx,dash=4) ; arrow(ppir.A,dash=4) ;
+	
+	l1=line(b2.dn-_i/6,b2.dn+_j/4) ;
+	line(l1,b2.dn+_i/6) ;
+	ck=b2.dn ;
+	bottom=[-7,-6] ; top = [6,2] ;
+end circ
+
+define circ2(bottom,top,inp,out,FF,cn,ck,ppo,ppi)
+	b1=box(O=[0,0],scale=3) ;
+	cn=b1.O ;
+	
+	b2=box(up=b1.dn-_j,A to B=[1,3], rotate=0) ;
+	FF=b2.O ;
+	
+	xinp=line(B=(b1.C+b1.sx)/2,scale=3,dash=4) ; arrow(xinp,dash=4) ;
+	xout=line(A=(b1.B+b1.dx)/2,scale=2,dash=4) ; {arrow(xout,dash=4) ;}
+	inp=xinp.A ; out=xout.B ;
+	
+	ppor=line(A=(b1.dx+b1.D)/2,dash=4) ;
+	ppobox=box(O=[ppor*_i,b2.dx*_j],"T") ; ppo=ppobox.dn ;
+	ppod=line(ppor,ppobox.up,dash=4) ; arrow(ppod,rotate=270,dash=4) ;
+	ppol=line(ppobox.sx,b2.dx,dash=4) ; arrow(ppol,rotate=180,dash=4) ;
+	
+	ppir=line(A=(b1.sx+b1.A)/2,rotate=180,dash=4) ;
+	ppibox=box(O=[ppir*_i,b2.sx*_j],"T") ;
+	label((ppibox.dn+ppibox.O)/2,"~") ;
+	ppi=ppibox.dn ;
+	ppid=line(ppir,ppibox.up,dash=4) ; 
+	ppil=line(ppibox.dx,b2.sx,dash=4) ;
+	arrow(ppir.A,dash=4) ; arrow(ppil.A,rotate=180,dash=4) ;
+	
+	l1=line(b2.dn-_i/6,b2.dn+_j/4) ;
+	line(l1,b2.dn+_i/6) ;
+	ck=b2.dn ;
+	bottom=[-7,-6] ; top = [6,2] ;
+end circ2
+
+define main(bottom,top)
+	c1=circ(inp=[0,0]) ;
+	c2=circ2(bottom=c1.bottom-_j,
+		bottom to top = [_i*(c1.top-c1.bottom),-_j*(c1.top-c1.bottom)],
+		rotate=0) ;
+	in=line(c1.inp,c2.inp,dash=4) ;
+	in0=line(scale=1.5, dash=4, B=in.M) ; arrow(dash=4,in0) ;
+	label(in0.A-_j/2,"I") ;
+	label(c1.cn,"M") ;
+	label(c2.cn,"M'") ;
+	label(c1.FF,"s") ;
+	label(c2.FF,"d") ;
+	
+	x=xor(i=(c1.out+c2.out)/2+_i,scale=0.4) ;
+	spigolo(c1.out,x.i1,rotate=90,dash=4) ;
+	spigolo(c2.out,x.i2,rotate=90,dash=4) ;
+	o1=line(x.o,dash=4,scale=0.7) ; arrow(o1,dash=4) ;
+	label(o1-_j/2,"O") ;
+
+	arrow(c1.ppi,rotate=180,dash=4) ;
+	j1= line(c1.ppi,c2.ppi,dash=4) ; arrow(j1,rotate=270,dash=4) ;
+	j2= line(c1.ppo,c2.ppo,dash=4) ; arrow(j2,rotate=270,dash=4) ;
+	
+	l0=line(c1.ck, c2.ck) ;
+	l1=line(l0.M, A to B = -_i/2) ;
+	label(l1+_j/3,"ck") ;
+	bottom=[in0.A*_i-.5,c2.top*_j] ; top = [o1*_i+.5,c1.top*_j] ;
+end main

@@ -1,0 +1,46 @@
+define lettera_p(default o,q) ;
+	vector a,b,c,d ;
+	a=[0,0] ; b=[0,2] ; c=[1,2] ; d=[1,0] ;
+	line(a,b) ;
+	arc2(A=(a+b)/2,C=(3*c+d)/4,rotate=-90) ;
+	o=(a+d)/2 ; q=(b+c)/2 ;
+end lettera_p ;
+
+define lettera_d(default o,q) ;
+	vector a,b,c,d ;
+	a=[0,0] ; b=[0,2] ; c=[1,2] ; d=[1,0] ;
+	line(a,b) ;
+	arc2(A=b,C=(c+d)/2,rotate=-90) ;
+	o=(a+d)/2 ; q=(b+c)/2 ;
+end lettera_d ;
+
+define lettera_l(default o,q) ;
+	vector a,b,c,d ;
+	a=[0,0] ; b=[0,2] ; c=[1,2] ; d=[1,0] ;
+	line(d,a) ;
+	line(a,b) ;
+	o=(a+d)/2 ; q=(b+c)/2 ;
+end lettera_l ;
+
+define logo1(default C, defval q)
+	C=[0,0] ;
+	p=lettera_p(C+versor(90),rotate=0) ;
+	lettera_d(C+versor(-30), rotate=-120) ;
+	lettera_l(C+versor(210), rotate=120) ;
+	q=p.q ;
+end logo1
+
+define logo(default C,q)
+	C=[0,0] ;
+	p=logo1(C,rotate=0,dash=4) ;
+	logo1(C,rotate=-10,scale=0.9) ;
+	logo1(C,rotate=-20,scale=0.8) ;
+	logo1(C,rotate=-30,scale=0.7) ;
+	logo1(C,rotate=-40,scale=0.6) ;
+	logo1(C,rotate=-50,scale=0.5) ;
+	logo1(C,rotate=-60,scale=0.4) ;
+	logo1(C,rotate=-70,scale=0.3) ;
+	logo1(C,rotate=-80,scale=0.2) ;
+	logo1(C,rotate=-90,scale=0.1) ;
+	q=p.q ;
+end logo ;

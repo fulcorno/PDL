@@ -1,0 +1,50 @@
+define main(bottom,top)
+	scalar dim ;
+	dim=3 ;
+	bd=box(scale=dim,[0,0],dash=4) ;
+	delta(C=bd.O,scale=0.4) ;
+	l1=line(bd.dx) ; arrow(l1) ;
+	bff=box(rotate=0,sx=l1,A to B=[1,dim],"FF") ;
+	
+	l2=line(scale=dim,bff.dx) ;
+	l3=line(M=l2,scale=dim,rotate=90) ;
+	l4=line(l3.B) ; l5=line(l3.A) ; arrow(l4) ; arrow(l5) ;
+	
+	b3=box(scale=dim,C=l5+_j*dim/3,dash=4) ;
+	lambda(C=b3.O,scale=0.4) ;
+	label((b3.O+b3.D)/2,"3") ;
+	b3o=line(b3.dx) ;
+	b2=box(scale=dim,A=l4-_j*dim/3,dash=4) ;
+	lambda(C=b2.O,scale=0.4) ;
+	label((b2.O+b2.D)/2,"2") ;
+	b2o=line(b2.dx,scale=2) ; arrow(b2o) ;
+	
+	l6=line(B=b2.C-_j*dim/3) ; arrow(l6) ;
+	l8=line(scale=dim,rotate=90,l6.A) ;
+	l7=line(l8) ; arrow(l7) ;
+	
+	b1=box(scale=dim,A=l7-_j*dim/3,dash=4) ;
+	lambda(C=b1.O,scale=0.4) ;
+	label((b1.O+b1.D)/2,"1") ;
+	b1o=line(b1.dx) ;
+	
+	l12=line(B=bd.A+_j*dim/3) ; arrow(l12) ;
+	l9=line(scale=dim, rotate=-90, l2.M) ;
+	l10=line(l9,[l12.A*_i,l9*_j]) ;
+	l11=line(l10,l12.A) ;
+	
+	l13=line(B=bd.C-_j*dim/3) ; arrow(l13) ;
+	l15=line(l8.M,[l13.A*_i,l8.M*_j]) ;
+	l14=line(l15,l13.A) ;
+	
+	inp=line(B=l14.M) ;
+	
+	box(dx=inp.A,scale=0.6,"I") ;
+	o2=box(sx=b2o,scale=0.8,"O2") ;
+	o1=box(dn=o2.up,scale=0.8,"O1") ;
+	o1x=line(B=o1.sx) ; line(b1o,o1x.A) ; arrow(o1x) ;
+	o3=box(up=o2.dn,scale=0.8,"O3") ;
+	o3x=line(B=o3.sx) ; line(b3o,o3x.A) ; arrow(o3x) ;
+	
+	bottom=[-3,-3] ; top=[16,10] ;
+end main

@@ -1,0 +1,62 @@
+scalar ang ;
+ang = 35 ;
+
+define left(default O,A,defval B)
+	l=line(versor(270-ang),rotate=270-ang,scale=1.5) ;
+	arrow(l.B,rotate=270-ang) ;
+	label(l.M+[-0.1,0.2]) ;
+	O=[0,0]; A=l.A; B=l.B;
+end left
+
+define right(default O,A,defval B)
+	O=[0,0] ;
+	q=left(rotate=2*ang,"") ;
+	label((q.A+q.B)/2+[0.1,0.2]) ;
+	A=q.A; B=q.B;
+end right
+
+define leftO(default O,A,B,defval O1)
+	l=left() ;
+	c=circle(l-versor(90-ang)) ;
+	A=l.A; B=l.B; O=l.O; O1=c.O ;
+end leftO
+
+define rightO(default O,A,B, defval O1)
+	l=right() ;
+	c=circle(l-versor(90+ang)) ;
+	A=l.A; B=l.B; O=l.O; O1=c.O ;
+end rightO
+
+define trian(default A, B, C, defval H)
+	A=[0,0] ;
+	B=[-1,-2] ;
+	H=[0,B*_j] ;
+	C=2*H-B ;
+	line(A,B) ; line(B,C) ; line(C,A) ;
+end trian
+
+define subtree(default O,H,B,C)
+	t=trian(scale=6) ;
+	O=t.A ; H=t.H ; B=t.B; C=t.C ;
+	c=circle((2*t.A+t.C+t.B)/4) ;
+	line(B=c.C1,rotate=-90) ; arrow(c.C1,rotate=-90) ;
+	l=left(c,"1") ; r=right(c,"0") ;
+	tl=trian(l,H=[l*_i,H*_j]) ;
+	tr=trian(r,A to B=[-_i*(tl.B-tl.A),_j*(tl.B-tl.A)],rotate=0) ;
+end subtree
+
+define main(bottom,top)
+	vector up ;
+	
+	c1=circle("d") ;
+	l0=line(B=c1.C1,rotate=-90) ; arrow(c1.C1,rotate=-90) ;
+	up=l0.A+2*_j ;
+	l1=left(c1,"1") ; r1=right(c1,"0") ;
+	tl1=subtree(l1,"s") ;
+	box(scale=0.6,up=r1,"0") ;
+	k1=line(up,tl1.B-2*_i) ; k2=line(up,A to B =
+	    [-_i*(k1.B-k1.A),_j*(k1.B-k1.A)]) ;
+	line(k1,k2) ;
+	
+	bottom=k1-[.4,.4] ; top=[_i*k2+.4,_j*up+.4];
+end main

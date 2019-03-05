@@ -1,0 +1,23 @@
+define main (bottom,top)
+	q0=FCstart("START") ;
+	q10=FCjl(q0) ;
+	q1=FCseq(q10) ;
+		label(q1.t13,"Pick up a") ;
+		label(q1.t23,"fault from") ;
+		label(q1.t33,"Fault List") ;
+	q2=FCseq(q1) ;
+		label(q2.t13,"Compute a") ;
+		label(q2.t23,"sequence for") ;
+		label(q2.t33,"that fault") ;
+	q3=FCalt(q2) ;
+		label(q3.t13,"More") ;
+		label(q3.t23,"faults") ;
+		label(q3.t33,"?") ;
+	q4=FCrd(q3.R,"N") ;
+	q5=FCend(q4,"STOP") ;
+	q6=FClu(q3.L,"Y") ;
+	q7=FCu(q6) ; q8=FCu(q7) ;
+	q9=FCld(out=q8) ;
+	
+	bottom=[-9,-22] ; top=[9,2] ;
+end main

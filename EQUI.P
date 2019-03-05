@@ -1,0 +1,57 @@
+scalar ang ;
+ang = 35 ;
+
+define left(default O,A,defval B)
+	l=line(versor(270-ang),rotate=270-ang,scale=1.5) ;
+	arrow(l.B,rotate=270-ang) ;
+	label(l.M+[-0.1,0.2]) ;
+	O=[0,0]; A=l.A; B=l.B;
+end left
+
+define right(default O,A,defval B)
+	O=[0,0] ;
+	q=left(rotate=2*ang,"") ;
+	label((q.A+q.B)/2+[0.1,0.2]) ;
+	A=q.A; B=q.B;
+end right
+
+define leftO(default O,A,B,defval O1)
+	l=left("") ;
+	c=circle(l-versor(90-ang)) ;
+	A=l.A; B=l.B; O=l.O; O1=c.O ;
+end leftO
+
+define rightO(default O,A,B, defval O1)
+	l=right("") ;
+	c=circle(l-versor(90+ang)) ;
+	A=l.A; B=l.B; O=l.O; O1=c.O ;
+end rightO
+
+define trian(default A,B,C)
+	A=[0,0] ;
+	B=2*versor(270-ang/2) ; C = 2*versor(270+ang/2) ;
+	line(A,B) ; line(B,C) ; line(C,A) ;
+end trian
+
+define main(bottom,top)
+	c1=circle("s") ;
+	u1=line(B=c1.C1,rotate=-90) ; arrow(c1.C1,rotate=-90) ;
+	l1=left(c1) ; r1=right(c1) ;
+	trian(l1) ; trian(r1) ;
+	
+	c2=circle("s",c1+[7,0]) ;
+	u2=line(B=c2.C1,rotate=-90) ; arrow(c2.C1,rotate=-90) ;
+	l2=leftO(c2,"s'") ; r2=rightO(c2,"s'") ;
+	ll2=left(l2) ; trian(ll2) ;
+	rl2=right(l2) ; box(up=rl2,"0",scale=0.5) ;
+	lr2=left(r2) ; box(up=lr2,"0",scale=0.5) ;
+	rr2=right(r2) ; trian(rr2) ;
+	
+	c3=circle("d",c2+[9,0]) ;
+	u3=line(B=c3.C1,rotate=-90) ; arrow(c3.C1,rotate=-90) ;
+	l3=leftO(c3,"s") ; r3=right(c3) ; box(up=r3,"0",scale=0.5) ;
+	ll3=left(l3) ; trian(ll3) ;
+	rl3=right(l3) ; trian(rl3) ;
+		
+	bottom=[-4,-8] ; top=[20,4];
+end main

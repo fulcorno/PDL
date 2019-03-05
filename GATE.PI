@@ -1,0 +1,195 @@
+vector dim_x,dim_y;
+scalar dim_o ;
+	dim_x=[2,0] ;
+	dim_y=[0,1] ;
+	dim_o=0.2 ;
+
+define negate(default A, default B)
+	A=[0,0] ;
+	B=dim_o*dim_x ;
+	circle(A=A, B=B,"") ;
+end negate
+
+define salda(default defval O, P)
+	O=[0,0] ;
+	P=[dim_o/3,0] ;
+	line(M=O, scale=2*length(P), rotate=22.5{,dash=4}) ;
+	line(M=O, scale=2*length(P), rotate=67.5{,dash=4}) ;
+	line(M=O, scale=2*length(P), rotate=112.5{,dash=4}) ;
+	line(M=O, scale=2*length(P), rotate=157.5{,dash=4}) ;
+end salda
+
+define async(default defval center, head)
+	head = [0,1] ;
+	center = [0,0] ;
+	line([-0.5,0],head) ;
+	line(head,[0.5,0]) ; 
+end async
+
+define and(defval o, default i, i1, i2) ;
+	i=[0,0] ;
+	o=dim_x ;
+	i1 = dim_y ;
+	i2= -dim_y ;
+	inp=line(i1*1.5,i2*1.5) ;
+	arc2(C=o,A =inp, rotate=-90) ;
+	label((i+o)/2) ;
+end and
+
+define or(defval o, default i, i1, i2)
+	i=[0,0] ;
+	o=dim_x ;
+	inp=arc4(C=i,A to B = 3*dim_y) ;
+	i1=inp.O+length(inp.A-inp.O)*versor(28) ;
+	i2=inp.O+length(inp.A-inp.O)*versor(-28) ;
+	arc8(B=inp.B,A=o) ;
+	arc8(B=o,A=inp.A) ;
+	label((i+o)/2) ;
+end or
+
+define xor(defval o, default i, i1, i2)
+	i=-dim_x/6 ;
+	o=dim_x ;
+	inp=arc4(C=i,A to B = 3*dim_y) ;
+	i1=inp.O+length(inp.A-inp.O)*versor(28) ;
+	i2=inp.O+length(inp.A-inp.O)*versor(-28) ;
+	inp2=arc4(C=[0,0],A to B = 3*dim_y) ;
+	arc8(B=inp2.B,A=o) ;
+	arc8(B=o,A=inp2.A) ;
+	label((i+o)/2) ;
+end xor
+
+define buf(defval o, default i)
+	i=[0,0] ;
+	o=dim_x ;
+	inp=line(M=i,A to B = dim_y*1.9) ;
+	line(inp,o) ;
+	line(o,inp.A) ;
+	label((2*i+o)/3) ;
+end buf
+
+define nand(defval o, default i, i1, i2)
+	i=[0,0] ;
+	porta=and(i) ;
+	i1=porta.i1 ;
+	i2=porta.i2 ;
+	neg=negate(porta) ;
+	o=neg.B ;
+end nand
+
+define nor(defval o, default i, i1, i2)
+	i=[0,0] ;
+	porta=or(i) ;
+	i1=porta.i1 ;
+	i2=porta.i2 ;
+	neg=negate(porta) ;
+	o=neg.B;
+end nor
+
+define xnor(defval o, default i, i1, i2)
+	i=[0,0] ;
+	porta=xor(i) ;
+	i1=porta.i1 ;
+	i2=porta.i2 ;
+	neg=negate(porta) ;
+	o=neg.B;
+end xnor
+
+define not(defval o, default i)
+	i=[0,0] ;
+	porta=buf(i) ;
+	neg=negate(porta) ;
+	o=neg.B ;
+end not
+
+define ff(default i, defval o, on, ck, up,dn)
+	vector dy ;
+	dy = 1.5*dim_y ;
+	i=[0,0] ;
+	o=dim_x ;
+	ck=-dy ;
+	on=ck+dim_x ;
+	neg=negate(on,dash=0) ;
+	on=neg.B ;
+	inp = line(B=0.5*dy,A to B = 2*dy) ;
+	top = line(inp.B,A to B = dim_x) ;
+	bot = line(inp.A,A to B = dim_x) ;
+	line(top,bot) ;
+	async(ck, center to head = dim_x/4, dash=0 ) ;
+	label((i+o)/2);
+	up=i+6*dim_y ;
+	dn=i-6*dim_y ;
+end ff
+
+define join(default A, default defval B)
+	A=[0,0] ;
+	B=dim_x ;
+	line(A,B) ;
+	label(length(dim_x)*[1/2,1/4]) ;
+end join
+
+define spigolo(default A, default defval B,C)
+    A=[0,0] ;
+    C=A+dim_x ;
+    B=C+dim_y ;
+    join(A,C,"");
+    join(C,B,"");
+    label((A+B+C)/3) ;
+end spigolo
+
+define esse(default A, default defval B, C,D)
+	A=[0,0] ;
+	C=A+dim_x/2 ;
+	D=C+dim_y ;
+	B=D+dim_x/2 ;
+	spigolo(A,D,rotate=0) ;
+	join(D,B,"") ;
+end esse
+
+define biforc(default A, B1,B2, C, D1,D2)
+	A=[0,0] ;
+	C=A+dim_x/2 ;
+	D1=C+dim_y ;
+	D2=C-dim_y ;
+	B1=D1+dim_x/2 ;
+	B2=D2+dim_x/2 ;
+	join(A,C,"") ;
+	join(D1,D2) ;
+	join(D1,B1,"") ;
+	join(D2,B2,"") ;
+	salda(C) ;
+end biforc
+
+define cross(default A, defval B, C1, C2)
+	A=[0,0] ;
+	B=dim_x ;
+	C1=dim_x/2+dim_y ;
+	C2=dim_x/2-dim_y ;
+	line(A,B) ;
+	line(C1,C2) ;
+	salda((A+B)/2) ;
+	label((A+C1)/2) ;
+end cross
+
+define input(default defval A, B)
+	A=[0,0] ;
+	B=-dim_x ;
+	inp=line(M=B,A to B=1.2*dim_y) ;
+	up=line(inp.B,A to B=0.8*dim_x) ;
+	line(up,A) ;
+	dr=line(A,inp.A+0.8*dim_x) ;
+	line(dr,inp.A) ;
+	label(B*0.55) ;
+end input
+
+define output(default defval A, B)
+	A=[0,0] ;
+	B=dim_x ;
+	input(A,B=B) ;
+end output
+
+define guasto( default O )
+	O=[0,0] ;
+	salda(O) ;
+	label(_j/3);
+end guasto

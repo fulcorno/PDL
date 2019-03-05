@@ -1,0 +1,69 @@
+define main(bottom,top)
+	q0=FCstart("GO") ;
+	
+	q1=FCjl(q0) ;
+	q1l=FCl(q1.L) ;
+	q1l1=FCl(q1l) ;
+	q1ld=FCld(q1l1) ;
+	
+	q2=FCjl(q1) ;
+	q2l=FCl(q2.L) ;
+	q2l1=FCld(q2l) ;
+	
+	q3=FCseq(q2) ;
+		label(q3.t12,"build") ;
+		label(q3.t22,"M_G") ;
+	
+	q4=FCalt(q3,"Fk?") ;
+	q4l=FCld(q4.L,"none") ;
+	q4r=FCr(q4.R,"observed") ;
+	q4r1=FCrd(q4r) ;
+	
+	q5=FCalt(q4l,"end M") ;
+	q5l=FClu(q5.L,"N") ;
+	q5l1=FCu(q5l) ; 
+	q5l2=FCu(q5l1) ;
+	q5r=FCrd(q5.R,"Y") ;
+	
+	q6=FCseq(q4r1) ;
+		label(q6.t12,"build") ;
+		label(q6.t22,"M_GF") ;
+	
+	q7=FCseq(q5r) ;
+		label(q7.t12,"all Fk") ;
+		label(q7.t22,"undet.") ;
+		
+	q8=FCalt(q6,"G=F") ;
+		label(q8.t12,"?") ;
+	q8l=FCld(q8.L,"equiv") ;
+	q8r=FCrd(q8.R,"differ") ;
+	
+	q9=FCend(q7,"STOP") ;
+	
+	q10=FCseq(q8l) ;
+		label(q10.t12,"Fk") ;
+		label(q10.t22,"undet.") ;
+	q10d=FCd(q10) ;
+	q10d1=FClu(in=q10d) ;
+	
+	q11=FCseq(q8r) ;
+		label(q11.t12,"Fault") ;
+		label(q11.t22,"Drop.") ;
+	
+	q12=FCseq(q11) ;
+		label(q12.t12,"Update") ;
+		label(q12.t22,"F.list") ;
+	q12d=FCru(in=q12) ;
+	
+	q13=FCjlr(L=q10d1.R) ;
+	q13d=FCru(in=q13) ;
+	q13l1=FCl(q13d.L) ;
+	q13l2=FCl(q13l1) ;
+	q13l3=FCl(q13l2) ;
+	q13l4=FCl(q13l3) ;
+	q13lu=FClu(q13l4) ;
+	
+	line(q13lu,q1ld) ;
+	
+	bottom=[-21,-42] ; top=[21,2] ;
+end main

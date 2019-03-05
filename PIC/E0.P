@@ -1,0 +1,31 @@
+define fig(iff, off, right,left)
+	g1=and("1") ;
+	g1i1=join(B=g1.i1) ; input(g1i1.A,"5") ; left = g1i1.A-dim_x ;
+	g1i2=join(B=g1.i2) ; input(g1i2.A,"6") ;
+	g1o=join(g1,scale=2) ;
+	iff=g1o ;
+	off=iff+dim_x ;
+	g2o=esse(off) ;
+	g3=or(i2=g2o,"3") ;
+	g3o=join(g3);
+	s1=spigolo(rotate=180,B=(g1i1.A+g1i1.B)/2,A=g3.i1) ; salda(s1.B) ;
+	g4=xnor(i1=g3o,"4") ;
+	g4o=join(g4) ; output(g4o,"PO") ; right=g4o+dim_x ;
+
+	g4i1=esse(B=g4.i2,scale=3.5) ;
+	g7=not(o=g4i1.A,"7") ;
+	s2=spigolo(rotate=-90,A=(g1o.A+g1o.B)/2,B=g7.i) ; salda(s2.A) ;
+end fig
+
+define main(bottom,top)
+	f1=fig() ;
+	f2=fig(iff=f1.iff-11*dim_y) ;
+	ff(f1.iff,dash=4,"2") ;
+	ff(f2.iff,dash=1) ;
+
+	l1=line(f2.iff,f2.right-dim_x-4*dim_y,dash=4) ;
+	l2=line(f2.off,f2.left+dim_x-4*dim_y,dash=4) ;
+	input(l2,"2") ; output(l1,"PPO") ;
+	bottom=[f1.left*_i-0.5,-17] ; top=[f1.right*_i+0.5,5] ;
+	{box(bottom,top,rotate=0,dash=2) ;}
+end main

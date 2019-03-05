@@ -1,0 +1,79 @@
+{ circuito di esempio e2 } 
+
+define main(bottom,top)
+
+{ schiera di AND }
+g2=and("g2");
+g3=and(i1=g2.i2-2*dim_y,"g3");
+g4=and(i1=g3.i2-2*dim_y,"g4");
+g5=and(i1=g4.i2-4*dim_y,"g5");
+
+	{ prima di g2 }
+j0=join(B=g2.i1,scale=6);
+x=input(j0.A,"X");
+s1=spigolo(g2.i2,rotate=180);
+salda(s1.C);
+g0o=join(B=s1.C);
+g0=not(o=g0o.A,"g0");
+s2=spigolo(g0.i,C=g0.o-2*dim_x);
+s3=spigolo(s2,g3.i1, rotate=-90);
+salda(s3.C);
+
+	{ g6 }
+g6i2=esse(g4);
+g6=or(i2=g6i2,"g6");
+g3o=esse(g6.i1,g3,rotate=0);
+
+	{ le uscite }
+u1=join(g2,scale=3);
+output(u1,"U1");
+u0=join(g6,[u1*_i,g6*_j]);
+output(u0,"U0");
+
+	{ prima di g3 }
+j2=join(B=s3.C,scale=3);
+j3=join(B=g3.i2,scale=5);
+salda(j3.A);
+
+	{ prima di g4 }
+g1o=join(B=g4.i1,scale=2);
+g1=not(o=g1o.A,"g1");
+j1=join(A=g1.o-3*dim_x,B=g1.i); { forza A rispetto a g1.o peche' len(not)>dim_x}
+salda(j1.A);
+j4=join(B=g4.i2,scale=6);
+
+	{ prima di g5 }
+g5i1=spigolo(s1,g5.i1,rotate=-90);
+g5i=spigolo(j4.A+2*dim_x,g5.i,rotate=-90);
+salda(g5i.A);
+g5i2=spigolo(x+dim_x,g5.i2,rotate=-90);
+salda(g5i2.A);
+
+	{ g7 }
+g7i1=join(g5i1.C+3*dim_y,scale=3);
+salda(g7i1.A);
+g7=or(i1=g7i1,"g7");
+g7i2=join(g7.i2,[g5i2.A*_i,g7.i2*_j]);
+salda(g7i2);
+g7o=join(g7.o);
+
+	{ flip flop }
+g8=ff(i=g5.i-4*dim_y,ck to o=1.5*dim_y-dim_x ,rotate=0,"g8");
+g9=ff(i=g8.i-4*dim_y,ck to o=1.5*dim_y-dim_x ,rotate=0,"g9");
+
+	{ collegamenti flip flop }
+spigolo(j2.A,g9.o,rotate=-90);
+spigolo(j4.A,g8.o,rotate=-90);
+spigolo(g8.i,g7o,rotate=0);
+g5o=join(g5,scale=4);
+spigolo(g9.i,g5o,rotate=0);
+g9ck=join(g9.ck);
+salda(g9ck);
+g8ck=spigolo(g9ck,g8.ck,rotate=90);
+ck=input([x*_i,(g9.ck-2*dim_y)*_j],"CK");
+spigolo(ck,g9ck,rotate=0);
+
+bottom=[-16,-28] ;
+top=[12,4] ;
+{box(bottom,top,rotate=0);}
+end main;

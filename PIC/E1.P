@@ -1,0 +1,118 @@
+{ circuito di esempio e1 }
+
+define main(bottom,top)
+
+{ schiera di AND }
+g3=and("g3");
+g4=and(i1=g3.i2-2*dim_y,"g4");
+g5=and(i1=g4.i2-2*dim_y,"g5");
+g6=and(i1=g5.i2-2*dim_y,"g6");
+g7=and(i1=g6.i2-2*dim_y,"g7");
+g8=and(i1=g7.i2-2*dim_y,"g8");
+g9=and(i1=g8.i2-2*dim_y,"g9");
+
+	{ prima di g3 }
+g3i1=join(B=g3.i1,scale=3);
+g0=not(o=g3i1.A,"g0");
+g3i2=join(B=g3.i2);
+
+	{ prima di g4 }
+g4i1=spigolo(g3i2.A,g4.i1,rotate=-90);
+x=join(B=(g4i1.A+g4i1.C)/2,scale=7);
+salda(x);
+input(x.A,"X");
+g4i2=join(B=g4.i2,scale=6);
+
+	{ prima di g5 }
+g5i1=join(B=g5.i1,scale=8);
+g5i2=join(B=g5.i2,scale=3);
+g1=not(o=g5i2.A,"g1");
+
+	{ prima di g6 }
+g6i1=join(B=g6.i1,scale=7);
+g6i2=join(B=g6.i2,scale=3);
+g2=not(o=g6i2.A,"g2");
+
+	{ prima di g0 }
+s1=spigolo(g0.i,g5i1.A+dim_x,rotate=180);
+salda(s1);
+
+	{ prima di g9 }
+g9i1=spigolo(g3i1.A+dim_x,g9.i1,rotate=-90);
+salda(g9i1.A);
+g9i2=spigolo(x.A+3*dim_x,g9.i2,rotate=-90);
+salda(g9i2.A);
+	
+	{ prima di g8 }
+g8i1=spigolo(g5i2.A+2*dim_x,g8.i1,rotate=-90);
+salda(g8i1.A);
+g8i2=join([g9i1.A*_i,g8.i2*_j],g8.i2);
+salda(g8i2.A);
+
+	{ prima di g7 }
+g7i1=join([g9i2.A*_i,g7.i1*_j],g7.i1);
+salda(g7i1.A);
+g7i2=join([g8i1.A*_i,g7.i2*_j],g7.i2);
+salda(g7i2.A);
+
+	{ prima di g2 }
+g2i=join([g9i2.A*_i,g2.i*_j],g2.i);
+salda(g2i.A);
+
+	{ prima di g10 }
+g10i2=join(g4,scale=2);
+g10=or(i2=g10i2,"g10");
+esse(g10.i1,g3,rotate=0);
+
+	{ prima di g11 }
+g11i1=join(g5,scale=2);
+g11=or(i1=g11i1,"g11");
+g6o=join(g6);
+salda(g6o);
+spigolo(g11.i2,g6o,rotate=180);
+
+	{ prima di g12 }
+g12i=join(g7,scale=2);
+g12=or(i=g12i,"g12");
+spigolo(g12.i1,g6o,rotate=0);
+esse(g12.i2,g8,rotate=0);
+
+	{ proma di g13 }
+g13=or(i1=g9+2*dim_x-dim_y,"g13");
+esse(g13.i1,g9,rotate=0);
+spigolo(g4i2.A,g13.i2,rotate=-90);
+salda([g4i2.A*_i,g6i1.A*_j]);
+
+	{ prima di g1 }
+g1i=join([g4i2.A*_i,g1.i*_j],g1.i);
+salda(g1i.A);
+
+        { le uscite }
+u1=join(g10);
+output(u1,"U1");
+u0=join(g11);
+output(u0,"U0");
+
+
+	{ flip flop }
+
+g14=ff(i=g9.i-5*dim_y,ck to o=1.5*dim_y-dim_x ,rotate=0,"g14");
+g15=ff(i=g14.i-4*dim_y,ck to o=1.5*dim_y-dim_x ,rotate=0,"g15");
+
+	{ collegamenti flip flop }
+spigolo(g6i1.A,g14.o,rotate=-90);
+spigolo(g5i1.A,g15.o,rotate=-90);
+g12o=join(g12);
+spigolo(g14.i,g12o,rotate=0);
+g13o=join(g13,scale=2);
+spigolo(g15.i,g13o,rotate=0);
+g15ck=join(g15.ck);
+salda(g15ck);
+g14ck=spigolo(g15ck,g14.ck,rotate=90);
+ck=input([x.A*_i,(g15.ck-2*dim_y)*_j],"CK");
+spigolo(ck,g15ck,rotate=0);
+
+bottom=[-19,-38] ;
+top=[13,3] ;
+{box(bottom,top,rotate=0);}
+end main;

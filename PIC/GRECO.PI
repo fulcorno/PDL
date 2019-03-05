@@ -1,0 +1,42 @@
+define delta(default i, defval next,o,C)
+	i=[0,0] ;
+	o=[2,0] ;
+	next = [2.4,0] ;
+	C=(i+o)/2 ;
+	vector C1 ;
+	scalar a ;
+	a=70 ;
+	C1=[1,-1] ;
+	circle(C1) ;
+	l1=arc16(B=C1+versor(a), rotate=180+a-360/16, scale=2) ;
+	arc2(B=l1.A,rotate=a-360/16,scale=0.7) ;
+	o=i+_i*2.4 ;
+end delta
+
+define lambda(default i, defval next,o,C)
+	i=[0,0] ;
+	o=[2,0] ;
+	next=[2.4,0] ;
+	C=(i+o)/2 ;
+	l1=line([2,-2], A to B = [-1.5,3]) ;
+	line([0,-2],l1.M) ;
+	arc4(A=l1,rotate=angle(l1.B-l1.A)-90,scale=0.5) ;
+end lambda
+
+define Uno(default i, defval next, o,C)
+	i=[0,0] ; o=[2,0] ; next=[2.4,0] ;
+	C=(i+o)/2 ;
+	line([0,-2],[2,-2]) ;
+	l2=line([1,-2],[1,1]) ;
+	line(l2,[0,0]) ;
+end Uno
+
+define Due(default i, defval next, o,C)
+	i=[0,0] ; o=[2,0] ; next=[2.4,0] ;
+	C=(i+o)/2 ;
+	l1=line([2,-2],[0,-2]) ;
+	scalar a ;
+	a=0.8 ;
+	l2=line(l1,[2*a,0]) ;
+	c2=arc5_8(A=l2, rotate=angle(l2.B-l2.A)-90,scale=a) ;
+end Due

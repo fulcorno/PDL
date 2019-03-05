@@ -1,0 +1,55 @@
+scalar ang ;
+ang = 50 ;
+
+define left(default O,A,defval B)
+	l=line(versor(270-ang),rotate=270-ang,scale=1.5) ;
+	arrow(l.B,rotate=270-ang) ;
+	O=[0,0]; A=l.A; B=l.B;
+end left
+
+define right(default O,A,defval B)
+	O=[0,0] ;
+	q=left(rotate=2*ang) ;
+	A=q.A; B=q.B;
+end right
+
+define leftO(default O,A,B,defval O1)
+	l=left() ;
+	c=circle(l-versor(90-ang)) ;
+	A=l.A; B=l.B; O=l.O; O1=c.O ;
+end leftO
+
+define rightO(default O,A,B, defval O1)
+	l=right() ;
+	c=circle(l-versor(90+ang)) ;
+	A=l.A; B=l.B; O=l.O; O1=c.O ;
+end rightO
+
+define trian(default A, B, C, defval H)
+	A=[0,0] ;
+	B=[-1,-2] ;
+	H=[0,B*_j] ;
+	C=(4*H-B)/3 ;
+	line(A,B) ; line(B,C) ; line(C,A) ;
+end trian
+
+define subtree(default O,H)
+	t=trian(scale=6) ;
+	O=t.A ;
+	H=t.H ;
+	c=circle((2*O+H)/3) ;
+	line(B=c.C1,rotate=-90) ; arrow(c.C1,rotate=-90) ;
+	l=left(c) ; r=right(c) ;
+	tl=trian(l,H=[l*_i,H*_j]) ;
+	box(scale=0.6,up=r,"0") ;
+end subtree
+
+define main(bottom,top)
+	c1=circle("s") ;
+	line(B=c1.C1,rotate=-90) ; arrow(c1.C1,rotate=-90) ;
+	l1=left(c1) ; r1=right(c1) ;
+	tl1=subtree(l1,"s'"{,rotate=-15}) ;
+	tr1=subtree(r1,"s'"{,rotate=15}) ;
+	
+	bottom=[-14,-20] ; top=[14,4];
+end main

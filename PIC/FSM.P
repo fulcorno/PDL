@@ -1,0 +1,26 @@
+define main(bottom,top)
+	l1=line(scale=2) ; arrow(l1) ;
+	box(dx=l1.A,scale=0.5,"I") ;
+	c1=circle(B=l1) ;
+	delta(C=c1,scale=0.2) ;
+	l2=line(c1.A) ; arrow(l2) ;
+	b1=box(sx=l2,A to B=[3,2],rotate=0,dash=4) ;
+	label((b1.up*2+b1.dn)/3,"STATO") ;
+	label((b1.up+b1.dn*2)/3,"S") ;
+	l3=line(b1.dx,scale=2) ; arrow(l3) ;
+	c2=circle(B=l3) ;
+	lambda(C=c2,scale=0.2) ;
+	l4=line(c2.A) ; arrow(l4) ;
+	box(sx=l4.B,scale=0.5,"O") ;
+	
+	l5=line(l1.M,A to B=2*_j,dash=1) ;
+	l6=line(l5,[c2.O*_i,l5*_j],dash=1) ;
+	l7=line(l6,c2.C1,dash=1) ; arrow(l7,rotate=-90) ;
+	label(l6.M+_j/3.5,"(Mealy)") ;
+	
+	l8=line(l3.M,A to B=-2*_j) ;
+	l9=line(l8,[c1.O*_i,l8*_j]) ;
+	l10=line(l9,c1.C2) ; arrow(l10,rotate=90) ;
+	
+	bottom=[-1,-3] ; top = [14,3] ;
+end main 

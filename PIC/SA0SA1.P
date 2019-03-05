@@ -1,0 +1,19 @@
+define main(bottom,top)
+	ga=and("A") ;
+	j1=join(B=ga.i1) ; join(B=ga.i2) ;
+	gao=biforc(ga,scale=1.5) ;
+	gao2=join(gao.B1,scale=2) ;
+	gb=or(i1=gao2,"B") ;
+	gbo=join(gb) ;
+	gc=nor(i1=gao.B2,"C") ;
+	gco=esse(A=gc,B=gb.i2,rotate=0) ;
+	join(B=gc.i2, A=[j1.A*_i,gc.i2*_j]) ;
+	
+	guasto((gao.A+gao.C)/2,"F1") ;
+	guasto(gao.B1,"F2") ;
+	guasto((gao.C+gao.D2)/2,rotate=90,"F3") ;
+	guasto((gco.D+gco.C)/2,rotate=90,"F4") ;
+	
+	bottom=[j1.A*_i-1.5,-5.2] ; top=[gbo.B*_i+1.5,3.2] ;
+	{box(bottom,top,rotate=0) ;}
+end main

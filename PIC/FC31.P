@@ -1,0 +1,53 @@
+define main(bottom,top)
+	q0=FCstart("START") ;
+
+	q1=FCseq(q0) ;
+		label(q1.t13,"Store") ;
+		label(q1.t23,"changed") ;
+		label(q1.t33,"PI's") ;
+
+	q2=FCjl(q1) ;
+	q2l=FCl(q2.L);
+	q2d=FCld(q2l);
+
+	q3=FCseq(q2) ;
+		label(q3.t13,"Extract") ;
+		label(q3.t23,"gate with") ;
+		label(q3.t33,"min.level") ;
+
+	q4=FCseq(q3) ;
+		label(q4.t13,"Evaluate") ;
+		label(q4.t23,"gate's") ;
+		label(q4.t33,"output") ;
+
+	q5=FCalt(q4) ;
+		label(q5.t13,"value") ;
+		label(q5.t23,"changed") ;
+		label(q5.t33,"?") ;
+	q5l=FCld(q5.L,"Y") ;
+	q5r=FCrd(q5.R,"N") ;
+	q5d=FCd(q5r);
+
+	q6=FCseq(q5l) ;
+		label(q6.t13,"Store all") ;
+		label(q6.t23,"successor") ;
+		label(q6.t33,"gates") ;
+
+	q7r=FCru(in=q5d) ;
+	q7=FCjlr(R=q7r.L) ;
+	q7l=FClu(q7.L) ;
+	
+	q8=FCalt(q7) ;
+		label(q8.t13,"more") ;
+		label(q8.t23,"gates") ;
+		label(q8.t33,"?") ;
+	q8r=FCrd(q8.R,"N") ;
+	q8l=FCl(q8.L,"Y") ;
+	q8u=FClu(q8l) ;
+
+	q9=FCend(q8r,"STOP") ;
+
+	line(q2d,q8u) ;
+
+	bottom=[-15,-38] ; top =[9,2] ;
+end main

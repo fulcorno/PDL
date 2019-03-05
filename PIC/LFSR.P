@@ -1,0 +1,46 @@
+define main(bottom,top)
+	x5=xor("x5") ;
+	x5o=join(x5) ;
+	x5i1=join(B=x5.i1) ;
+	x5i2=join(B=x5.i2) ;
+	
+	b4=ff(x5o,"b4",dash=4) ;
+	b4o=join(b4) ;
+	b4c=spigolo(A=b4.ck, B to A = dim_y*1.2+dim_x/4, rotate=180) ;
+	b3=ff(b4o,"b3",dash=4) ;
+	b3o=join(b3) ;
+	b3c=spigolo(A=b3.ck, B to A = dim_y*1.2+dim_x/4, rotate=180) ;
+	b2=ff(b3o,"b2",dash=4) ;
+	b2o=join(b2) ;
+	b2c=spigolo(A=b2.ck, B to A = dim_y*1.2+dim_x/4, rotate=180) ;
+	b1=ff(b2o,"b1",dash=4) ;
+	b1o=join(b1) ;
+	b1c=spigolo(A=b1.ck, B to A = dim_y*1.2+dim_x/4, rotate=180) ;
+	b0=ff(b1o,"b0",dash=4) ;
+	b0o=join(b0) ;
+	b0c=spigolo(A=b0.ck, B to A = dim_y*1.2+dim_x/4, rotate=180) ;
+	salda(b1c.B) ; salda(b2c.B) ; salda(b3c.B) ; salda(b4c.B) ;
+	
+	ck=line(b0c.B,[x5i1.A*_i,b0c.B*_j]-dim_x) ;
+	input(ck,"ck",dash=4) ;
+	
+	o4=nor(o=b4.i+3*dim_y,rotate=180,"o4") ;
+	s4=spigolo(B=o4.i1,A=(b4o.A+2*b4o.B)/3,rotate=90) ;
+	o3=or(o=b3.i+3*dim_y,rotate=180,"o3") ;
+	s3=spigolo(B=o3.i1,A=(b3o.A+2*b3o.B)/3,rotate=90) ;
+	esse(o4.i2,o3,rotate=0) ;
+	o2=or(o=b2.i+3*dim_y,rotate=180,"o2") ;
+	s2=spigolo(B=o2.i1,A=(b2o.A+2*b2o.B)/3,rotate=90) ;
+	s1=spigolo(B=o2.i2,A=(b1o.A+b1o.B)/2,rotate=90) ;
+	esse(o3.i2,o2,rotate=0) ;
+	spigolo(o4,x5i1.A,rotate=180) ;
+	salda(s1.A) ; salda(s2.A) ; salda(s3.A) ; salda(s4.A) ;
+	
+	x2 = xor(o=b2.ck-3.5*dim_y-dim_x,rotate=180,"x2") ;
+	ss=spigolo(x2.i2,(b2o.A+b2o.B)/2,rotate=0) ;
+	spigolo(x2.i1,b0o,rotate=0) ;
+	spigolo(B=x2, A=x5i2.A,rotate=-90) ;
+	salda(ss.B) ;
+	
+	bottom=[-8,-8] ; top = [25,6] ;
+end main

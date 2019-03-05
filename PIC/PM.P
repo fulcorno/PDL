@@ -1,0 +1,48 @@
+define fsm(i,i1,o,s,l,d)
+	l1=line(scale=3) ; arrow(l1) ;
+	i=l1.A ;
+	i1=i+_j+_i ;
+	c1=circle(B=l1) ;
+	d=c1.O ;
+	l2=line(c1.A,scale=2) ; arrow(l2) ;
+	b1=box(sx=l2,A to B=[3,2],rotate=0{,dash=4}) ;
+	s=b1.O ;
+	l3=line(b1.dx,scale=2) ; arrow(l3) ;
+	c2=circle(B=l3) ;
+	l=c2.O ;
+	l4=line(c2.A,scale=2) ; arrow(l4) ;
+	o=l4 ;
+	
+	l5=line(l1.M,A to B=3*_j,dash=1) ;
+	l6=line(l5,[c2.O*_i,l5*_j],dash=1) ;
+	l7=line(l6,c2.C1,dash=1) ; arrow(l7,rotate=-90) ;
+	
+	l8=line(l3.M,A to B=2*_j) ;
+	l9=line(l8,[c1.O*_i,l8*_j]) ;
+	l10=line(l9,c1.C1) ; arrow(l10,rotate=-90) ;
+end fsm
+
+define main(bottom,top)
+	scalar s ; s=0.13 ;
+	f1=fsm(i=[0,1.5],i to i1=[1,1],rotate=0) ;
+	label(f1.s,"S1") ;
+	d1=delta(scale=s,o=f1.d) ; Uno(d1,scale=s) ;
+	l1=lambda(scale=s,o=f1.l) ; Uno(l1,scale=s) ;
+	f2=fsm(i=[0,-1.5],i to i1= [1,-1],rotate=0) ;
+	label(f2.s,"S2") ;
+	d2=delta(scale=s,o=f2.d) ; Due(d2,scale=s) ;
+	l2=lambda(scale=s,o=f2.l) ; Due(l2,scale=s) ;
+	c1=circle(O=(f1.d+f2.d)/2, A to C1=[1.7,3],rotate=0,dash=4) ;
+	c2=circle(O=(f1.l+f2.l)/2, A to C1=[1.7,3],rotate=0,dash=4) ;
+	d12=Uno(scale=s,C=c1) ; delta(scale=s,next=d12.i) ; Due(scale=s,d12) ;
+	l12=Uno(scale=s,C=c2) ; lambda(scale=s,next=l12.i) ; Due(scale=s,l12) ;
+	b1=box(O=(f1.s+f2.s)/2, A to B =[4,6], rotate=0,dash=4,"S12") ;
+	inp2=line(f2.i,f1.i) ;
+	inp=line(B=inp2.M) ;
+	
+	il=box(dx=inp.A,scale=0.6,"I") ;
+	ol=box(sx=f1.o,scale=0.75,"O1") ;
+	box(sx=f2.o,scale=0.75,"O2") ;
+	
+	bottom=[il.sx*_i-0.5,-5] ; top = [ol.dx*_i+0.5,5] ;
+end main

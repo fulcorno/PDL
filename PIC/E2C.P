@@ -1,0 +1,83 @@
+{ circuito di esempio e2 - solo rete combinatoria con evidenziato percorso } 
+{ fatto da un evento tra i gate }
+
+define main(bottom,top)
+
+{ schiera di AND }
+g2=and("g2");
+label(g2+dim_x/3+dim_y/2,"0");
+g3=and(i1=g2.i2-2*dim_y,"g3");
+label(g3+dim_x/3+dim_y/2,"0");
+g4=and(i1=g3.i2-2*dim_y,"g4");
+label(g4+dim_x/2-dim_y/2,"0-  ");
+label(g4+dim_x/2-dim_y/2," >1");
+g5=and(i1=g4.i2-4*dim_y,"g5");
+label(g5+dim_x/3+dim_y/2,"0");
+
+	{ prima di g2 }
+j0=join(B=g2.i1,scale=6);
+x=input(j0.A,"X");
+label(x+dim_x/3+dim_y/2,"0");
+s1=spigolo(g2.i2,rotate=180);
+salda(s1.C);
+g0o=join(B=s1.C);
+g0=not(o=g0o.A,"g0");
+label(g0+dim_x/3+dim_y/2,"1"); 
+s2=spigolo(g0.i,C=g0.o-2*dim_x);
+s3=spigolo(s2,g3.i1, rotate=-90);
+salda(s3.C);
+
+	{ g6 }
+g6i2=esse(g4,dash=4);
+g6=or(i2=g6i2,"g6");
+label(g6+dim_x/2+dim_y/2,"0-  ");
+label(g6+dim_x/2+dim_y/2," >1");
+g3o=esse(g6.i1,g3,rotate=0);
+
+	{ le uscite }
+u1=join(g2,scale=3);
+output(u1,"U1");
+u0=join(g6,[u1*_i,g6*_j],dash=4);
+output(u0,"U0");
+
+	{ prima di g3 }
+j2=join(B=s3.C,scale=2);
+input(j2.A,"G9o");
+label(j2.A+dim_x/3+dim_y/2,"0");
+j3=join(B=g3.i2,scale=5);
+salda(j3.A);
+
+	{ prima di g4 }
+g1o=join(B=g4.i1,scale=2);
+g1=not(o=g1o.A,"g1");
+label(g1+dim_x/3+dim_y/2,"1");
+j1=join(A=g1.o-3*dim_x,B=g1.i); { forza A rispetto a g1.o peche' len(not)>dim_x}
+salda(j1.A);
+j4=join(B=g4.i2,scale=6,dash=4);
+input(j4.A,"G8o");
+label(j4.A+dim_x/2+dim_y/2,"0-  ");
+label(j4.A+dim_x/2+dim_y/2," >1");
+
+	{ prima di g5 }
+g5i1=spigolo(s1,g5.i1,rotate=-90);
+g5i=spigolo(j4.A+2*dim_x,g5.i,rotate=-90,dash=4);
+salda(g5i.A);
+g5i2=spigolo(x+dim_x,g5.i2,rotate=-90);
+salda(g5i2.A);
+g5o=join(g5,scale=3);
+output(g5o,"G9i");
+
+	{ g7 }
+g7i1=join(g5i1.C+3*dim_y,scale=3);
+salda(g7i1.A);
+g7=or(i1=g7i1,"g7");
+label(g7+dim_x/3+dim_y/2,"1");
+g7i2=join(g7.i2,[g5i2.A*_i,g7.i2*_j]);
+salda(g7i2);
+g7o=join(g7.o,[u0*_i,g7.o*_j]);
+output(g7o,"G8i");
+
+bottom=[-16,-17] ;
+top=[12,3] ;
+{box(bottom,top,rotate=0);}
+end main;

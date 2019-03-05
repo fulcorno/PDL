@@ -1,0 +1,69 @@
+{ grafo della macchina prodotto e1 x e2 }
+
+define main(bottom,top)
+
+	{ palloni ed etichette }
+a=tits([0,0]) ;
+label(a.o1,"a");
+label(a.o2,"e");
+b=tits([0,-4]) ;
+label(b.o1,"b");
+label(b.o2,"f");
+c=tits([0,-8]) ;
+label(c.o1,"c");
+label(c.o2,"g");
+d=tits([5,-4]) ;
+label(d.o1,"d");
+label(d.o2,"f");
+
+scalar alfa;
+alfa=angle(d.o1-c.o2);
+
+	{ a -> b 0 diritta  giu' }
+ab=line(a.o1+versor(-45),b.o1+versor(45));
+arrow(ab.B,rotate=-90) ;
+label(ab.M+_i/4,"AA") ;
+
+	{ b -> c }
+bc=arc8(A=c.o2+versor(90-22.5),B=b.o2+versor(270+22.5),dash=4) ;
+arrow(bc.A,rotate=180+90-22.5,dash=4) ;
+label(bc.C+_i/4,"BB") ;
+
+        { c -> b  sinistra su }
+cb=arc8(B=c.o1+versor(90+22.5),A=b.o1+versor(270-22.5),dash=4) ;
+arrow(cb.A,rotate=90-22.5,dash=4) ;
+label(cb.C-_i/4,"CC") ;
+
+        { c -> a  sinistra su lunga 2 }
+ca=arc4(B=c.o1+versor(90+45),A=a.o1+versor(270-45)) ;
+arrow(ca.A,rotate=90-45) ;
+label(ca.C+_i/4,"CC") ;
+
+	{ d -> d }
+dd=arc3_4(B=d.o2+versor(40),A=d.o2+versor(-40));
+arrow(dd.B,rotate=180+40) ;
+label(dd.C-_i/4,"CC") ;
+
+	{ a -> d  SE (Sud East) }
+ad=line(a.o2+versor(-alfa),d.o1+versor(180-alfa),dash=4); 
+arrow(ad.B,rotate=-alfa,dash=4) ; 
+label(ad.M+_i/5+_j/5,"BB") ;
+
+	{ d -> c  SW (Sud West) }
+dc=line(d.o1+versor(180+alfa),c.o2+versor(alfa),dash=4); 
+arrow(dc.B,rotate=180+alfa,dash=4) ; 
+label(dc.M+_i/5-_j/5,"BB") ;
+
+	{ b d  orizzontale dx }
+bd=line(b.o2+versor(0),d.o1+versor(180)); 
+arrow(bd.B) ; 
+label(bd.M-_j/4,"CC") ;
+
+top=[dd.C*_i+.5,a.o1*_j+1.5] ; 
+bottom=[ca.C*_i-.5, c.o2*_j-1.5] ;
+
+{box(bottom,top,rotate=0);}
+
+end main
+
+

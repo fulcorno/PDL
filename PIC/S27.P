@@ -1,0 +1,94 @@
+define main(bottom,top)
+
+{ schiera di FF }
+g7=ff("7",dash=4) ;
+g9=ff(g7.dn,"9",dash=4) ;
+g11=ff(g9.dn+g9.dn-g7.dn,{"11"}"g5",dash=4) ;
+
+{ rete in uscita da g9 }
+g9o=join(g9,scale=1.5) ;
+
+g4=and(i1=g9o,{"4"}"g8") ;
+g4o=biforc(g4) ;
+
+g3=or(i2=g4o.B1,{"3"}"g15");
+
+g1=or(i1=g4o.B2,{"1"}"g16") ;
+g1o=esse(g1) ;
+g16o=join(B=g1.i2) ;
+g16=input(g16o.A,{"16"}"g3",dash=4) ;
+
+g0=nand(i2=g1o,{"0"}"g9") ;
+g3o=esse(g3,g0.i1,rotate=0) ;
+
+{ rete in uscita da g7 }
+g7o=join(g7) ;
+
+g2=nor(i2=g7o,{"2"}"g12") ;
+g2o=esse(g2,g3.i1,rotate=0);
+
+{ rete in uscita da g11 }
+g11o=join(g11,scale=0.7) ;
+
+{ rete per il calcolo di g7 }
+g6o=join(B=g7.i) ;
+g6=nor(o=g6o.A,{"6"}"g13") ;
+g15o=join(B=g6.i2) ;
+g15=input(g15o.A,{"15"}"g2",dash=4) ;
+salda(g2o.C) ;
+g2o2=join(g2o.C,rotate=90) ;
+g6i1=join(B=g6.i1);
+g2g6=spigolo(B=g6i1.A,A=g2o2.B, rotate=0) ;
+
+{ rete per il calcolo di g9 }
+g8o=cross(B=g9.i) ;
+g8=nor(o=g8o.A,{"8"}"g11") ;
+g8i1=join(B=g8.i1,scale=1.5) ;
+g8i2=join(B=g8.i2) ;
+g11g8=esse(g11o,g8i1.A,rotate=90) ;
+
+{ rete per il calcolo di g11 }
+g10o=join(B=g11.i) ;
+g10=nor(o=g10o.A,{"10"}"g10") ;
+g10i1=join(B=g10.i2,scale=1.8) ;
+g10i2=join(B=g10.i1) ;
+
+{ gate g5 e sue connessioni }
+g4i2=spigolo(A=g4.i2,rotate=180) ;
+g5o1=spigolo(A=g4i2.B,B=g10i1.A,rotate=0) ;
+salda(g5o1.C) ;
+g5o=join(B=g5o1.C,scale=0.5) ;
+g5=not(o=g5o.A,{"5"}"g14") ;
+g13o=join(B=g5.i,scale=0.5) ;
+g13=input(g13o.A,{"13"}"g0",dash=4) ;
+spigolo(g10i1.A,g5o.B,rotate=90) ;
+esse(g10i2.A,g8o.C2,rotate=90) ;
+
+{ reazione da g0 a g8 }
+g0o=join(g0,scale=0.5) ;
+g0o1=spigolo(B=g0o,scale=4) ;
+g8i2b=spigolo(g8i2.A,g0o1.A,rotate=90) ;
+
+{ ingresso g14 }
+g2i1=join(B=g2.i1) ;
+g14=input(g2i1.A,{"14"}"g1",dash=4) ;
+
+{ rete di uscita }
+g17i=spigolo(B=g8o.C1,rotate=180) ;
+g17=not(g17i.A,{"17"}"g17") ;
+g17o=join(g17) ;
+output(g17o{,}{"17"}{"g17"},dash=4) ;
+
+{ distribuzione del clock }
+g11ic=join(B=g11.ck,scale=0.2) ;
+ck1=spigolo(B=g11ic.A) ;
+ck2=spigolo(B=ck1,A=g9.ck,rotate=0) ;
+salda(ck2.B) ;
+ck3=spigolo(B=ck2.C,A=g7.ck,rotate=0) ;
+salda(ck3.B) ;
+input(ck1.A,"12",dash=4) ;
+
+bottom=[-15,-22] ;
+top=[17,4] ;
+{salda(bottom) ; salda(top) ;}
+end main ;

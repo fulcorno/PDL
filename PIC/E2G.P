@@ -1,0 +1,45 @@
+{ grafo della macchina singola e2 }
+
+define main(bottom,top)
+
+e=circle([0,0],"e") ;
+f=circle([0,-4],"f") ;
+g=circle([0,-8],"g") ;
+
+	{ e -> f 0 sinistra  giu' }
+ef0=arc8(B=f+versor(90+22.5),A=e+versor(270-22.5)) ;
+arrow(ef0.B,rotate=-90+22.5) ;
+label(ef0.C-_i/6,"A") ;
+
+	{ e -> f 1 destra  giu' }
+ef1=arc8(A=f+versor(90-22.5),B=e+versor(270+22.5),dash=4) ;
+arrow(ef1.A,rotate=180+90-22.5,dash=4) ;
+label(ef1.C+_i/6,"B") ;
+
+	{ f -> g }
+fg=arc8(A=g+versor(90-22.5),B=f+versor(270+22.5),dash=4) ;
+arrow(fg.A,rotate=180+90-22.5,dash=4) ;
+label(fg.C+_i/6,"B") ;
+
+        { g -> f  sinistra su }
+gf=arc8(B=g+versor(90+22.5),A=f+versor(270-22.5),dash=4) ;
+arrow(gf.A,rotate=90-22.5,dash=4) ;
+label(gf.C-_i/6,"C") ;
+
+        { g -> e  sinistra su lunga 2 }
+ge=arc4(B=g+versor(90+45),A=e+versor(270-45)) ;
+arrow(ge.A,rotate=90-45) ;
+label(ge.C+_i/6,"C") ;
+
+	{ f -> f }
+f_f=arc3_4(B=f+versor(40),A=f+versor(-40),"C");
+arrow(f_f.B,rotate=180+40) ;
+label(f_f.C-_i/6,"C") ;
+
+top=[3,1.5] ; bottom=[-2.75, -9.5] ;
+
+{box(bottom,top,rotate=0);}
+
+end main
+
+

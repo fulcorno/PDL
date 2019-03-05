@@ -1,0 +1,188 @@
+define arrow(default P)
+	P=[0,0] ;
+	uno=line([-0.2,0],[-0.2,-0.1]) ;
+	due=line(uno,P) ;
+	tre=line(due,[-0.2,0.1]) ;
+	line(tre,uno.A) ;
+end arrow
+
+define box(default A, default defval B, C,D,O, up,dn,sx,dx) 
+	A=[0,0] ; B=[1,1] ;
+	C=[0,1] ; D=[1,0] ;
+	up=(C+B)/2 ; dn=(A+D)/2 ;
+	sx=(C+A)/2 ; dx=(B+D)/2 ;
+	O=(A+B)/2 ;
+	line(A,D) ; line(D,B) ; line(B,C) ; line(C,A) ;
+	label(O) ;
+end box
+
+scalar FCx, FCy, FCborder ;
+FCx = 3 ;
+FCy = 2 ;
+FCborder = 0.15 ;
+
+define FCvuoto	(
+		default in, defval out, L, R, O,
+		t12,t22, t13,t23,t33, 
+		A,B,C,D,E,F,G,H
+		)
+	scalar FCxx, FCyy ;
+	FCxx = FCx * (1-FCborder) ;
+	FCyy = FCy * (1-FCborder) ;
+	O = [0,0] ;
+	in = [0,FCy] ; out = [0,-FCy] ;
+	L = [-FCx,0] ; R = [FCx, 0] ;
+	A = [-FCxx,-FCyy] ; B=[0,-FCyy] ; C=[FCxx,-FCyy] ;
+	D = [FCxx,0] ; E=[FCxx,FCyy] ; F=[0,FCyy] ;
+	G = [-FCxx,FCyy] ; H=[-FCxx,0] ;
+	t12 = (2*F+B)/3 ; t22 = (F+2*B)/3 ;
+	t13 = (3*F+B)/4 ; t23 = (2*F+2*B)/4 ; t33 = (F+3*B)/4 ;
+end FCvuoto
+
+define FCseq ( default in, defval out, t12,t22, t13,t23,t33 )
+	x = FCvuoto() ;
+	in = x.in ; out = x.out ;
+	t12=x.t12; t22=x.t22; t13=x.t13; t23=x.t23; t33=x.t33;
+	
+	box(x.A,x.E,rotate=0) ;
+	arrow(x.F,rotate=270,dash=0) ;
+	line(in,x.F,dash=0) ;
+	line(x.B,out,dash=0) ;
+	label(t23) ;
+end FCseq
+
+define FCalt ( default in, L, R, t12,t22, t13,t23,t33 )
+	x = FCvuoto() ;
+	in = x.in ; L=x.L; R=x.R;
+	t12=x.t12; t22=x.t22; t13=x.t13; t23=x.t23; t33=x.t33;
+	
+	line(x.F,x.H) ; line(x.H,x.B) ; line(x.B,x.D) ; line(x.D,x.F) ;
+	arrow(x.F,rotate=270,dash=0) ;
+	line(in,x.F,dash=0) ;
+	line(x.H,L,dash=0) ;
+	line(x.D,R,dash=0) ;
+	label(t23) ;
+end FCalt
+
+define FCrd ( default L, defval out )
+	x = FCvuoto() ;
+	L = x.L ; out = x.out ;
+	
+	line(L,x.O) ;
+	line(x.O,out) ;
+	label(x.t13) ;
+end FCrd
+
+define FCld ( default R, defval out )
+	x = FCvuoto() ;
+	R = x.R ; out = x.out ;
+	
+	line(R,x.O) ;
+	line(x.O,out) ;
+	label(x.t13) ;
+end FCld
+
+define FCru ( default L, defval in )
+	x = FCvuoto() ;
+	L = x.L ; in = x.in ;
+
+	line(L,x.O) ;
+	line(x.O,in) ;
+	label(x.t33) ;
+end FCru
+
+define FClu ( default R, defval in )
+	x = FCvuoto() ;
+	R = x.R ; in = x.in ;
+
+	line(R,x.O) ;
+	line(x.O,in) ;
+	label(x.t33) ;
+end FClu
+
+define FCd ( default in, defval out )
+	x = FCvuoto() ;
+	in = x.in ; out = x.out ;
+	line(in,out) ;
+end FCd
+
+define FCu ( default out, defval in )
+	x = FCvuoto() ;
+	in = x.in ; out = x.out ;
+	line(out,in) ;
+end FCu
+
+define FCr ( default L, defval R )
+	x = FCvuoto() ;
+	L=x.L ; R=x.R ;
+	line(L,R) ;
+	label(x.t13) ;
+end FCr
+
+define FCl ( default R, defval L )
+	x = FCvuoto() ;
+	L=x.L ; R=x.R ;
+	line(R,L) ;
+	label(x.t13) ;
+end FCl
+
+define FCstart ( default O, defval out )
+	x = FCvuoto() ;
+	O=x.O ; out=x.out ;
+	circle(O,A=x.B) ;
+	circle(O,A=(O+9*x.B)/10) ;
+	line(x.B,out) ;
+end FCstart
+
+define FCend ( defval O, default in )
+	x = FCvuoto() ;
+	O=x.O ; in=x.in ;
+	circle(O,A=x.F) ;
+	circle(O,A=(O+9*x.F)/10) ;
+	arrow(x.F,rotate=270) ;
+	line(x.F,in) ;
+end FCend
+
+define FCjl ( default in, defval out, L )
+	x = FCvuoto() ;
+	in=x.in ; out=x.out ; L=x.L ;
+	c=circle(x.O,A=(5*x.O+x.F)/6,"") ;
+	line(in,c.A) ;
+	arrow(c.A,rotate=270) ;
+	line(L,c.C1) ;
+	arrow(c.C1) ;
+	line(c.B,out) ;
+end FCjl
+
+define FCjr ( default in, defval out, R )
+	x = FCvuoto() ;
+	in=x.in ; out=x.out ; R=x.R ;
+	c=circle(x.O,A=(5*x.O+x.F)/6,"") ;
+	line(in,c.A) ;
+	arrow(c.A,rotate=270) ;
+	line(R,c.C2) ;
+	arrow(c.C2,rotate=180) ;
+	line(c.B,out) ;
+end FCjr
+
+define FCjlr ( L, R, defval out )
+	x = FCvuoto() ;
+	out=x.out ; L=x.L; R=x.R ;
+	c=circle(x.O,A=(5*x.O+x.F)/6,"") ;
+	line(L,c.C1) ; arrow(c.C1) ;
+	line(R,c.C2) ; arrow(c.C2,rotate=180) ;
+	line(c.B,out) ;
+end FCjlr
+
+define tits1(default o, o1,o2)
+	o1=[0,0] ;
+	a1=arc3_4(o1) ;
+	a2=arc3_4(A=a1.B,B=a1.A) ;
+	o2=a2.O ; o=(o1+o2)/2 ;
+end tits1
+
+define tits(default o, o1, o2)
+	o=[0,0] ;
+	t=tits1(o,rotate=45) ;
+	o1=t.o1 ; o2=t.o2 ;
+end tits

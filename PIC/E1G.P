@@ -1,0 +1,57 @@
+{ grafo della macchina singola e1 }
+
+define main(bottom,top)
+
+a=circle([0,0],"a") ;
+b=circle([0,-4],"b") ;
+c=circle([0,-8],"c") ;
+d=circle([4,-4],"d") ;
+
+	{ a -> b 0 diritta  giu' }
+ab=line(a.C2,b.C1);
+arrow(ab.B,rotate=-90) ;
+label(ab.M+_i/6,"A") ;
+
+	{ b -> c }
+bc=arc8(A=c+versor(90-22.5),B=b+versor(270+22.5),dash=4) ;
+arrow(bc.A,rotate=180+90-22.5,dash=4) ;
+label(bc.C+_i/6,"B") ;
+
+        { c -> b  sinistra su }
+cb=arc8(B=c+versor(90+22.5),A=b+versor(270-22.5),dash=4) ;
+arrow(cb.A,rotate=90-22.5,dash=4) ;
+label(cb.C-_i/6,"C") ;
+
+        { c -> a  sinistra su lunga 2 }
+ca=arc4(B=c+versor(90+45),A=a+versor(270-45)) ;
+arrow(ca.A,rotate=90-45) ;
+label(ca.C+_i/6,"C") ;
+
+	{ d -> d }
+dd=arc3_4(B=d+versor(40),A=d+versor(-40),"C");
+arrow(dd.B,rotate=180+40) ;
+label(dd.C-_i/6,"C") ;
+
+	{ a -> d  SE (Sud East) }
+ad=line(a+versor(-45),d+versor(180-45),dash=4); 
+arrow(ad.B,rotate=-45,dash=4) ; 
+label(ad.M+_i/8+_j/8,"B") ;
+
+	{ d -> c  SW (Sud West) }
+dc=line(d+versor(180+45),c+versor(45),dash=4); 
+arrow(dc.B,rotate=180+45,dash=4) ; 
+label(dc.M+_i/8-_j/8,"B") ;
+
+	{ b d  orizzontale dx }
+bd=line(b.A,d.B); 
+arrow(bd.B) ; 
+label(bd.M-_j/6,"C") ;
+
+top=[dd.C*_i+.5,a.C1*_j+.5] ; 
+bottom=[ca.C*_i-.5, c.C2*_j-.5] ;
+
+{box(bottom,top,rotate=0);}
+
+end main
+
+

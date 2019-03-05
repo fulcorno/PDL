@@ -1,0 +1,36 @@
+define main(bottom,top)
+	b1=box(O=[0,0],scale=3) ;
+	label((b1.up*4+b1.dn*3)/7,"rete") ;
+	label((b1.up*3+b1.dn*4)/7,"combinatoria") ;
+	
+	b2=box(up=b1.dn-_j,A to B=[1,3], rotate=0,"FF") ;
+	line(M=(b2.up*1+b2.dn*6)/7, A to B = b2.B - b2.C, dash=1) ;
+	line(M=(b2.up*2+b2.dn*5)/7, A to B = b2.B - b2.C, dash=1) ;
+	line(M=(b2.up*3+b2.dn*4)/7, A to B = b2.B - b2.C, dash=1) ;
+	line(M=(b2.up*4+b2.dn*3)/7, A to B = b2.B - b2.C, dash=1) ;
+	line(M=(b2.up*5+b2.dn*2)/7, A to B = b2.B - b2.C, dash=1) ;
+	line(M=(b2.up*6+b2.dn*1)/7, A to B = b2.B - b2.C, dash=1) ;
+	
+	inp=line(B=(b1.C+b1.sx)/2,scale=2,dash=4) ; arrow(inp,dash=4) ;
+	label(inp.A-_i/4,"I") ; label(inp.B+_i/5,"i") ;
+	out=line(A=(b1.B+b1.dx)/2,scale=2,dash=4) ; arrow(out,dash=4) ;
+	label(out.B+_i/4,"O") ; label(out.A-_i/5,"o") ;
+	
+	ppor=line(A=(b1.dx+b1.D)/2,dash=4) ;
+	ppod=line(ppor,[ppor*_i,b2.dx*_j],dash=4) ;
+	ppol=line(ppod,b2.dx,dash=4) ; arrow(ppol,rotate=180,dash=4) ;
+	label(ppor.A-_i/5,"s") ;
+	
+	ppir=line(A=(b1.sx+b1.A)/2,rotate=180,dash=4) ;
+	ppid=line(ppir,[ppir*_i,b2.sx*_j],dash=4) ;
+	ppil=line(ppid,b2.sx,dash=4) ; arrow(ppir.A,dash=4) ;
+	label(ppir.A+_i/5,"s'") ;
+	
+	l1=line(b2.dn-_i/6,b2.dn+_j/4) ;
+	line(l1,b2.dn+_i/6) ;
+	l2=line(b2.dn,A to B=-_j/2) ;
+	l3=line(l2,A to B = -_i/2) ;
+	label(l3-_j/4,"clock") ;
+	
+	bottom=[-4,-7] ; top = [4,2] ;
+end main

@@ -1,0 +1,60 @@
+define gpall(default defval O)
+	scalar r ;
+	r = 0.46 ;
+	O=[0,0] ;
+	circle(O,scale=r) ;
+	label(O) ;
+	l1=line(O-r*_j,A to B = -(2-r)*_j) ;
+	arrow(l1,rotate=-90,dash=0) ;
+end gpall
+
+define main(bottom,top)
+	{ circuito buono }
+	b1=box([0,1],[2,3],"Circuito") ;
+	l0=line(b1.dn,A to B = -_j) ;
+	arrow(l0,rotate=-90) ;
+	
+	{ fault list }
+	gp0=gpall([4,2],"F.1") ;
+	gpall([5,2],"F.2") ;
+	gpall([6,2],"F.3") ;
+	gpall([7,2],"F.4") ;
+	gpall([8,2],"...",dash=3) ;
+	gp1=gpall([9,2],"F.n") ;
+	label((gp0+gp1)/2+_j*.75,"Guasti possibili") ;
+	
+	{ Blocco ATPG }
+	b2=box([0,-2],gp1+[1,-2],rotate=0,"Automatic Test Pattern Generator",
+	    dash=4) ;
+	
+	{ Uscita del TP }
+	vector p1 ; p1 = b2.dn ;
+	l1=line(p1-0.2*_i,A to B = -_j) ;
+	l2=line(l1,A to B = -_i*0.15) ;
+	l3=line(l2,p1-_j*1.3) ;
+	l4=line(l3,p1+[0.15+0.2,-1]) ;
+	l5=line(l4,A to B = -_i*0.15) ;
+	line(l5,p1+0.2*_i) ;
+	label(p1-_j/2+[1,0.2],"Test   ") ;
+	label(p1-_j/2+[1,-0.2],"Pattern") ;
+	
+	{ Apparecchiatura di testing }
+	b3=box(up=l3.B, A to B = [3,2], rotate=0) ;
+	label((b3.dn+2*b3.up)/3,"Prova di") ;
+	label((2*b3.dn+b3.up)/3,"collaudo") ;
+	
+	{ Esiti della prova (grazie Elisabetta) }
+	lx1=line((2*b3.A+b3.D)/3, scale=1.5, rotate=270-40) ;
+	arrow(lx1,rotate=270-40) ;
+	label(lx1-_j/4,"funzionante") ;
+	lx2=line((2*b3.D+b3.A)/3, scale=1.5, rotate=270+40) ;
+	arrow(lx2,rotate=270+40) ;
+	label(lx2-_j/4,"guasto") ;
+	
+	{ Aggiunta di diagnosi }
+	ly1=line(lx2-_j/2,A to B = -_j, dash = 1) ;
+	arrow(ly1,rotate=-90) ;
+	circle(scale=0.5,C1=ly1,"F.k") ;
+	
+	bottom=[-0.5,-9.5] ; top = [10.5,3.5] ;
+end main

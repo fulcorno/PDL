@@ -1,0 +1,97 @@
+ERROR	main.c	/^void ERROR ( reason, info )$/
+Hfun	symtab.c	/^static int Hfun (key)$/
+Mmain	main.c	/^int main ( argc, argv )$/
+U	lex.c	/^# define U(x) x$/
+YYBACKUP	gram.c	/^#define YYBACKUP( newtoken, newvalue )\\$/
+YYRECOVERING	gram.c	/^#define YYRECOVERING()	(!!yyerrflag)$/
+add_num	built.c	/^static void add_num(s,v)$/
+add_obj	built.c	/^static void add_obj(s,c,n,tab)$/
+add_vec	built.c	/^static void add_vec(s,v)$/
+calc_matrix	matrix.c	/^matrix calc_matrix( p, num )$/
+check_down	ogg.c	/^void check_down()$/
+check_matrix	matrix.c	/^static void check_matrix (m,p,n)$/
+check_obj	ogg.c	/^void check_obj( a )$/
+create	symtab.c	/^smt_node * create ( name )$/
+create_builtin	built.c	/^void create_builtin()$/
+create_down	symtab.c	/^down_node * create_down (p)$/
+create_handle	symtab.c	/^handle_node * create_handle (p)$/
+create_obj	symtab.c	/^smt_node *create_obj ( name )$/
+create_ref	symtab.c	/^smt_node *create_ref ( name )$/
+create_var	symtab.c	/^smt_node *create_var ( name, vartype )$/
+delta	matrix.c	/^static point delta (p2,p1)$/
+device_exec	hard.c	/^int device_exec(p)$/
+device_init	hard.c	/^int device_init( p )$/
+device_shut	hard.c	/^int device_shut(p)$/
+do_angle	parse.c	/^YYStype do_angle ( v )$/
+do_assign	parse.c	/^void do_assign ( name, a )$/
+do_div	parse.c	/^YYStype do_div ( a,b )$/
+do_gethandle	parse.c	/^YYStype do_gethandle( a, b )$/
+do_getval	parse.c	/^YYStype do_getval ( a )$/
+do_length	parse.c	/^YYStype do_length ( v )$/
+do_mul	parse.c	/^YYStype do_mul ( a,b )$/
+do_negate	parse.c	/^YYStype do_negate ( a )$/
+do_sub	parse.c	/^YYStype do_sub ( a,b )$/
+do_sum	parse.c	/^YYStype do_sum ( a,b )$/
+do_vector	parse.c	/^YYStype do_vector ( a,b )$/
+do_versor	parse.c	/^YYStype do_versor ( v )$/
+draw_it	draw.c	/^void draw_it(dev)$/
+equal	g_ps.c	/^#define equal(a,b) (fabs(((b)-(a))\/((a)+(b)))<0.00/
+find_handle	ogg.c	/^handle_node * find_handle ( ref, name )$/
+g_bgi_init	g_bgi.c	/^void g_bgi_init(p)$/
+g_bgi_label	g_bgi.c	/^void g_bgi_label(p,s)$/
+g_bgi_line	g_bgi.c	/^void g_bgi_line(a,b,d)$/
+g_bgi_shut	g_bgi.c	/^void g_bgi_shut()$/
+g_ps_init	g_ps.c	/^void g_ps_init(p)$/
+g_ps_label	g_ps.c	/^void g_ps_label(p,s)$/
+g_ps_line	g_ps.c	/^void g_ps_line(a,b,d)$/
+g_ps_shut	g_ps.c	/^void g_ps_shut()$/
+get_defval	ogg.c	/^point get_defval(ref)$/
+get_val	ogg.c	/^point get_val(ref,tag)$/
+if	lex.c	/^if (p==0) return(0);$/
+input	lex.c	/^# define input() (((yytchar=yysptr>yysbuf?U(*--yys/
+line_flush	g_ps.c	/^static void line_flush()$/
+lookup	symtab.c	/^smt_node * lookup ( name )$/
+make_point	parse.c	/^point make_point ( x,y )$/
+mult_mm	matrix.c	/^matrix mult_mm(m1,m2)$/
+mult_mv	matrix.c	/^point mult_mv(m,v)$/
+new_arg_t1	ogg.c	/^void new_arg_t1 ( a, b ) $/
+new_arg_t1_def	ogg.c	/^void new_arg_t1_def ( b ) $/
+new_arg_t2	ogg.c	/^void new_arg_t2 ( a1, a2, b ) $/
+new_arg_t34	ogg.c	/^void new_arg_t34 ( a, t ) $/
+new_down1	ogg.c	/^void new_down1(b)$/
+new_down2	ogg.c	/^void new_down2(a,b)$/
+new_handle	ogg.c	/^void new_handle( a, b )$/
+new_num	parse.c	/^YYStype new_num ( val )$/
+new_obj	ogg.c	/^void new_obj( a )$/
+new_str	parse.c	/^YYStype new_str ( val )$/
+new_vec	parse.c	/^YYStype new_vec ( val )$/
+output	lex.c	/^# define output(c) putc(c,yyout)$/
+pitagora	matrix.c	/^static double pitagora(a)$/
+prologue	g_ps.c	/^static void prologue(p)$/
+rotscal	matrix.c	/^static void rotscal(m,s,a)$/
+ruota	matrix.c	/^static void ruota(m,dee,der)$/
+s_init	draw.c	/^static void s_init()$/
+s_peek	draw.c	/^static stack_node *s_peek()$/
+s_pop	draw.c	/^static void s_pop ()$/
+s_push	draw.c	/^static void s_push (n)$/
+set_dash	ogg.c	/^void set_dash(a)$/
+set_fill	ogg.c	/^void set_fill(a)$/
+set_label	ogg.c	/^void set_label(a)$/
+smt_dump	symtab.c	/^void smt_dump()$/
+smt_stat	symtab.c	/^void smt_stat()$/
+smtinit	symtab.c	/^void smtinit()$/
+sort_specs	matrix.c	/^static void sort_specs(p,n)$/
+table_pop	symtab.c	/^void table_pop()$/
+table_push	symtab.c	/^void table_push()$/
+trailer	g_ps.c	/^static void trailer()$/
+trasla	matrix.c	/^static void trasla(m,ee,er)$/
+traverse	draw.c	/^static void traverse()$/
+unput	lex.c	/^# define unput(c) {yytchar= (c);if(yytchar=='\\n')y/
+yyerror	main.c	/^void yyerror(s)$/
+yyinput	lex.c	/^yyinput(){$/
+yylex	lex.c	/^yylex(){$/
+yymore	lex.c	/^# define yymore() (yymorfg=1)$/
+yyoutput	lex.c	/^yyoutput(c)$/
+yyparse	gram.c	/^yyparse()$/
+yyunput	lex.c	/^yyunput(c)$/
+yywrap	main.c	/^int yywrap()$/

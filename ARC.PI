@@ -1,0 +1,63 @@
+{ arc.pi 
+  libreria per la generazione degli archi di cerchio e di ellisse
+}
+define arc16(default O, default A, defval B, C)
+	O=[0,0] ; A=[1,0] ;
+	scalar z ;
+	z=360/16 ;
+	B=versor(z) ;
+	l1=line(A,versor(z*.25)) ;
+	l2=line(l1,versor(z*.5)) ;
+	C=l2 ;
+	l3=line(l2,versor(z*.75)) ;
+	line(l3,B) ;
+end arc16
+
+define arc8(default O,default A,defval B,C)
+	O=[0,0] ; A=[1,0] ;
+	uno=arc16(O,A) ;
+	C=uno ;
+	due=arc16(O,uno) ;
+	B=due ;
+end arc8
+
+define arc4(default O,default A, defval B,C)
+	O=[0,0] ; A=[1,0] ;
+	uno=arc8(O,A) ;
+	C=uno ;
+	due=arc8(O,uno) ;
+	B = due ;
+end arc4
+
+define arc2(default O, default A, defval B,C)
+	O=[0,0] ; A=[1,0] ;
+	uno=arc4(O,A) ;
+	C=uno ;
+	due=arc4(O,uno) ;
+	B=due ;
+end arc2 ;
+
+define arc3_4(default O, default A, defval B,C)
+	O=[0,0] ; A=[1,0] ;
+	uno=arc2(O,A) ;
+	due=arc4(O,uno) ;
+	B=due ;
+	C=versor(135) ;
+end arc3_4
+
+define arc5_8(default O, default A, defval B,C)
+	O=[0,0] ; A=[1,0] ;
+	uno=arc2(O,A) ;
+	due=arc8(O,uno) ;
+	B=due ;
+	C=versor(360*5/8) ;
+end arc5_8
+
+define circle(default defval O, default A, B, C1, C2)
+	O=[0,0] ; A=[1,0] ;
+	C1=[0,1] ; C2 = -C1 ;
+	B = 2*O-A ;
+	uno=arc2(O,A) ;
+	arc2(O,B) ;
+	label(O) ;
+end circle

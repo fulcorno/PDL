@@ -1,0 +1,47 @@
+# MakeFile for PDL language
+
+all: pdl$x
+
+OBJS= main.o parse.o symtab.o built.o ogg.o matrix.o \
+	draw.o hard.o g_ps.o
+
+CFLAGS= -g -Wall -DSMTDEBUG
+
+gram.c: gram.y
+
+gram.o: lex.c types.h
+
+lex.c: lex.l
+
+$(OBJS): types.h
+# main.obj: err.h
+# built.obj hard.obj g_bgi.obj: prim.h
+
+pdl: gram.o $(OBJS) 
+	$(CC) $(CFLAGS) -o pdl gram.o $(OBJS) -lm
+
+clean:
+	-rm $(OBJS)
+	-rm gram.o gram.c lex.c
+	-rm pdl$x
+
+wc:
+	wc main.c parse.c symtab.c built.c ogg.c matrix.c draw.c hard.c \
+g_bgi.c g_ps.c gram.y lex.l proto.h types.h err.h prim.h
+
+# Automatic .ps compilation
+
+.SUFFIXES: .p .ps
+
+.p.ps:
+	pdl -o $*.ps arc.pi diag.pi gate.pi $<
+
+
+ps: pdl$x \
+	4reti.ps cnff.ps fsm.ps gctp.ps hwpm.ps pm.ps svc.ps \
+	fc41.ps fc42.ps \
+	s27.ps
+
+4reti.ps cnff.ps fsm.ps gctp.ps hwpm.ps pm.ps svc.ps: arc.pi diag.pi
+fc41.ps fc42.ps: arc.pi diag.pi
+s27.ps: arc.pi gate.pi

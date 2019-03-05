@@ -1,0 +1,16 @@
+# MakeFile for PDL language
+
+.SUFFIXES: .p .ps
+
+.p.ps:
+	pdl -o $*.ps arc.pi diag.pi gate.pi greco.pi $<
+
+
+ps: \
+	4reti.ps cnff.ps fsm.ps gctp.ps hwpm.ps pm.ps svc.ps \
+	fc41.ps fc42.ps \
+	s27.ps
+
+4reti.ps cnff.ps fsm.ps gctp.ps hwpm.ps pm.ps svc.ps: arc.pi diag.pi
+fc41.ps fc42.ps: arc.pi diag.pi
+s27.ps: arc.pi gate.pi

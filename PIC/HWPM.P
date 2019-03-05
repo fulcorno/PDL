@@ -1,0 +1,45 @@
+define circ(bottom,top,inp,out,FF,cn,ck)
+	b1=box(O=[0,0],scale=3) ;
+	cn=b1.O ;
+	
+	b2=box(up=b1.dn-_j,A to B=[1,3], rotate=0) ;
+	FF=b2.O ;
+	
+	xinp=line(B=(b1.C+b1.sx)/2,scale=3,dash=4) ; arrow(xinp,dash=4) ;
+	xout=line(A=(b1.B+b1.dx)/2,scale=4,dash=4) ; arrow(xout,dash=4) ;
+	inp=xinp.A ; out=xout.B ;
+	
+	ppor=line(A=(b1.dx+b1.D)/2,dash=4) ;
+	ppod=line(ppor,[ppor*_i,b2.dx*_j],dash=4) ;
+	ppol=line(ppod,b2.dx,dash=4) ; arrow(ppol,rotate=180,dash=4) ;
+	
+	ppir=line(A=(b1.sx+b1.A)/2,rotate=180,dash=4) ;
+	ppid=line(ppir,[ppir*_i,b2.sx*_j],dash=4) ;
+	ppil=line(ppid,b2.sx,dash=4) ; arrow(ppir.A,dash=4) ;
+	
+	l1=line(b2.dn-_i/6,b2.dn+_j/4) ;
+	line(l1,b2.dn+_i/6) ;
+	l2=line(b2.dn,A to B=-_j/2) ;
+	l3=line(l2,A to B = -3*_i) ;
+	ck=l3 ;
+	bottom=[-7,-6] ; top = [6,2] ;
+end circ
+
+define main(bottom,top)
+	c1=circ(inp=[0,0]) ;
+	c2=circ(inp=[0,-_j*(c1.top-c1.bottom)]) ;
+	in=line(c1.inp,c2.inp,dash=4) ;
+	in0=line(scale=1.5, dash=4, B=in.M) ;
+	label(c1.out-_j/2,"O1") ;
+	label(c2.out-_j/2,"O2") ;
+	label(in0.A-_j/2,"I") ;
+	label(c1.cn,"rete 1") ;
+	label(c2.cn,"rete 2") ;
+	label(c1.FF,"FF1") ;
+	label(c2.FF,"FF2") ;
+	
+	l0=line(c1.ck, c2.ck) ;
+	l1=line(c2.ck, A to B = -2*_i) ;
+	label(l1+_j/2,"ck") ;
+	bottom=c2.bottom-_j ; top = c1.top ;
+end main
